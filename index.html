@@ -631,33 +631,37 @@
         </div>
     </main>
 <div class="music-panel">
-    <button class="music-btn" id="playBtn"><i class="fas fa-pause"></i></button>
+    <button class="music-btn" id="playBtn"><i class="fas fa-play"></i></button>
     <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5">
 </div>
 
 <script>
-    const bgMusic = new Audio('trec.mp3'); // Указываем локальный файл
+    const bgMusic = new Audio('trec.mp3');
     bgMusic.loop = true;
     bgMusic.volume = 0.5;
-
+    
     const playBtn = document.getElementById('playBtn');
     const volumeControl = document.getElementById('volume');
+    
+    // Инициализация кнопки в правильном состоянии
+    playBtn.innerHTML = '<i class="fas fa-play"></i>';
 
-    // Пытаемся запустить автоматическое воспроизведение при загрузке
-    document.addEventListener('DOMContentLoaded', () => {
+    // Запуск при первом клике пользователя
+    document.addEventListener('click', firstPlayHandler, {once: true});
+
+    function firstPlayHandler() {
         bgMusic.play()
             .then(() => {
                 playBtn.innerHTML = '<i class="fas fa-pause"></i>';
             })
             .catch(error => {
-                console.log('Требуется взаимодействие пользователя');
-                // Показываем кнопку воспроизведения если автозапуск не удался
-                playBtn.style.display = 'block';
+                console.error('Ошибка воспроизведения:', error);
             });
-    });
+    }
 
-    // Обработчик клика по кнопке
-    playBtn.addEventListener('click', () => {
+    // Основной обработчик кнопки
+    playBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         if (bgMusic.paused) {
             bgMusic.play();
             playBtn.innerHTML = '<i class="fas fa-pause"></i>';
@@ -667,15 +671,17 @@
         }
     });
 
-    // Обработчик изменения громкости
     volumeControl.addEventListener('input', (e) => {
         bgMusic.volume = e.target.value;
     });
 
-    // Обработчик ошибок аудио
+    // Проверка готовности файла
+    bgMusic.addEventListener('canplaythrough', () => {
+        console.log('Аудио готово к воспроизведению');
+    });
+
     bgMusic.addEventListener('error', (error) => {
-        console.error('Ошибка загрузки аудио:', error);
-        alert('Файл trec.mp3 не найден или не может быть загружен');
+        console.error('Ошибка:', error);
     });
 </script>
 </body>
