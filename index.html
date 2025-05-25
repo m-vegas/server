@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Администрация | Red-Rock</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blood-red: #8B0000;
+            --gold: #FFD700;
+            --cyber-blue: #00FFFF;
+            --dark-bg: #0A0A1F;
+            --card-bg: rgba(20, 20, 40, 0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Oxanium', cursive;
+        }
+
+        body {
+            background: var(--dark-bg);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(ellipse at center, #1a1a40 0%, #0A0A1F 100%);
+            animation: pulse 10s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .title {
+            font-size: 4rem;
+            background: linear-gradient(45deg, var(--blood-red), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px var(--blood-red); }
+            to { text-shadow: 0 0 30px var(--gold); }
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            padding: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .admin-card {
+            background: var(--card-bg);
+            border: 2px solid var(--blood-red);
+            border-radius: 15px;
+            padding: 20px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admin-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 30px var(--gold);
+            border-color: var(--gold);
+        }
+
+        .admin-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 0%, rgba(255, 215, 0, 0.05) 50%, transparent 100%);
+            animation: scan 6s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 2px solid var(--cyber-blue);
+            margin-bottom: 15px;
+            object-fit: cover;
+            box-shadow: 0 0 10px rgba(0,255,255,0.3);
+        }
+
+        .nickname {
+            color: var(--cyber-blue);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .role {
+            color: var(--gold);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .music-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            padding: 10px 15px;
+            border-radius: 10px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0,255,255,0.2);
+        }
+
+        .music-btn {
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .music-btn:hover {
+            color: var(--cyber-blue);
+        }
+
+        input[type="range"] {
+            accent-color: var(--cyber-blue);
+        }
+
+        @media (max-width: 600px) {
+            .title { font-size: 2.5rem; }
+            .avatar { width: 70px; height: 70px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg"></div>
+    <header class="header">
+        <h1 class="title">Red-Rock Administration</h1>
+    </header>
+    <main>
+        <div class="admin-grid">
+          <!-- Руководство -->
+            <div class="admin-card">
+                <div class="card-content">
+                    <img src="https://i.imgur.com/royshelby.png" class="avatar" alt="Roy Shelby">
+                    <div class="nickname">Roy_Shelby [Рой]</div>
+                    <div class="role">Главный Администратор</div>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="card-content">
+                    <img src="https://i.imgur.com/platonov.png" class="avatar" alt="Platonov">
+                    <div class="nickname">Alexandr_Platonov [Platonov]</div>
+                    <div class="role">Заместитель ГА</div>
+                </div>
+            </div>
+
+            <!-- Кураторы -->
+            <div class="admin-card">
+                <div class="card-content">
+                    <img src="https://i.imgur.com/stew.png" class="avatar" alt="Stew">
+                    <div class="nickname">Stew_Nowman [stew]</div>
+                    <div class="role">Старший Куратор</div>
+                </div>
+            </div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/1?set=set4" class="avatar" alt="Alex_Busto">
+        <div class="nickname">Alex_Busto [A.Busto]</div>
+        <div class="role">Куратор</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/2?set=set4" class="avatar" alt="Tema_Turbina">
+        <div class="nickname">Tema_Turbina [Tema]</div>
+        <div class="role">Куратор</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/3?set=set4" class="avatar" alt="Jeffy_Cosmo">
+        <div class="nickname">Jeffy_Cosmo [Cosmo]</div>
+        <div class="role">Разработчик Arizona Tools</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/4?set=set4" class="avatar" alt="Tommy_Jones">
+        <div class="nickname">Tommy_Jones [Jones]</div>
+        <div class="role">ГС ГОС</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/5?set=set4" class="avatar" alt="Alex_Spenser">
+        <div class="nickname">Alex_Spenser [Spenser]</div>
+        <div class="role">ЗГС ГОС</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/6?set=set4" class="avatar" alt="Snickers_Moore">
+        <div class="nickname">Snickers_Moore [S.Moore]</div>
+        <div class="role">ГС за хелп</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/7?set=set4" class="avatar" alt="Spartak_Suvorov">
+        <div class="nickname">Spartak_Suvorov [S.Suvorov]</div>
+        <div class="role">ГС НО</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/8?set=set4" class="avatar" alt="Alvaro_Glendale">
+        <div class="nickname">Alvaro_Glendale [A.Glendale]</div>
+        <div class="role">ГС Пра-во</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/9?set=set4" class="avatar" alt="Cosimo_Shelby">
+        <div class="nickname">Cosimo_Shelby [C.Shelby]</div>
+        <div class="role">След. за хелп</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/10?set=set4" class="avatar" alt="Edwin_Sgibneve">
+        <div class="nickname">Edwin_Sgibneve [Sgibneve]</div>
+        <div class="role">След за хелп</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/11?set=set4" class="avatar" alt="Edward_Louis">
+        <div class="nickname">Edward_Louis [Louis]</div>
+        <div class="role">Анти-бот</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/12?set=set4" class="avatar" alt="Baltika_Blasse">
+        <div class="nickname">Baltika_Blasse [B.Blasse]</div>
+        <div class="role">ГС СМИ</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/13?set=set4" class="avatar" alt="Tristin_Duplas">
+        <div class="nickname">Tristin_Duplas [T.Duplas]</div>
+        <div class="role">Следящий МО</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/14?set=set4" class="avatar" alt="Ioan_Mayer">
+        <div class="nickname">Ioan_Mayer [Mayer]</div>
+        <div class="role">ГС МО</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/15?set=set4" class="avatar" alt="Kuro_Izumi">
+        <div class="nickname">Kuro_Izumi [Izumi]</div>
+        <div class="role">Технический администратор</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/16?set=set4" class="avatar" alt="Alex_Largus">
+        <div class="nickname">Alex_Largus [Largus]</div>
+        <div class="role">Следящий МО</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/17?set=set4" class="avatar" alt="Dexter_Campbell">
+        <div class="nickname">Dexter_Campbell [Campbell]</div>
+        <div class="role">ГС МЮ</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/18?set=set4" class="avatar" alt="Dora_Stewart">
+        <div class="nickname">Dora_Stewart [D.Stewart]</div>
+        <div class="role">ЗГС Пра-во</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/19?set=set4" class="avatar" alt="Fernando_Kind">
+        <div class="nickname">Fernando_Kind [F.Kind]</div>
+        <div class="role">ГС МЗ</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/20?set=set4" class="avatar" alt="Nezuko_Shelby">
+        <div class="nickname">Nezuko_Shelby [N.Shelby]</div>
+        <div class="role">ЗГС МЮ</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/21?set=set4" class="avatar" alt="Zuhari_Adob">
+        <div class="nickname">Zuhari_Adob [Adob]</div>
+        <div class="role">Анти-бот</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/22?set=set4" class="avatar" alt="Aqua_Undertaker">
+        <div class="nickname">Aqua_Undertaker [A.Undertaker]</div>
+        <div class="role">ГС Гетто</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/23?set=set4" class="avatar" alt="Giorno_Gioovanna">
+        <div class="nickname">Giorno_Gioovanna [Gioovanna]</div>
+        <div class="role">Репорт</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/24?set=set4" class="avatar" alt="Fill_Uzi">
+        <div class="nickname">Fill_Uzi [F.Uzi]</div>
+        <div class="role">ГС Мафий</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/25?set=set4" class="avatar" alt="Roy_Gray">
+        <div class="nickname">Roy_Gray [Gray]</div>
+        <div class="role">ЗГС МО</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/26?set=set4" class="avatar" alt="Messmer_Impaler">
+        <div class="nickname">Messmer_Impaler [M.Impaler]</div>
+        <div class="role">Следящий МО/МЮ</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/27?set=set4" class="avatar" alt="Hermann_Barrington">
+        <div class="nickname">Hermann_Barrington [H.Barrington]</div>
+        <div class="role">Следящий МЮ</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/28?set=set4" class="avatar" alt="Cole_Cooper">
+        <div class="nickname">Cole_Cooper [Сooper]</div>
+        <div class="role">Следящий МО/Пра-во</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/29?set=set4" class="avatar" alt="Shane_Belserion">
+        <div class="nickname">Shane_Belserion [Belserion]</div>
+        <div class="role">ЗГС МЗ</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/30?set=set4" class="avatar" alt="Matteo_Blade">
+        <div class="nickname">Matteo_Blade [Blade]</div>
+        <div class="role">Следящий МО/Пра-во</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/31?set=set4" class="avatar" alt="Joseph_Harrington">
+        <div class="nickname">Joseph_Harrington [J.Harrington]</div>
+        <div class="role">Следящий МЮ/Пра-во</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/32?set=set4" class="avatar" alt="Clancy_Rozwell">
+        <div class="nickname">Clancy_Rozwell [Rozwell]</div>
+        <div class="role">Следящий МЮ</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/33?set=set4" class="avatar" alt="Alex_Kormakov">
+        <div class="nickname">Alex_Kormakov [Kormakov]</div>
+        <div class="role">ЗГС Гетто</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/34?set=set4" class="avatar" alt="William_McGrand">
+        <div class="nickname">William_McGrand [W.McGrand]</div>
+        <div class="role">Следящий МЮ</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/35?set=set4" class="avatar" alt="Belfegor_Paradise">
+        <div class="nickname">Belfegor_Paradise [Paradise]</div>
+        <div class="role">Следящий Гетто/Мафии</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/36?set=set4" class="avatar" alt="Fabiano_Caruana">
+        <div class="nickname">Fabiano_Caruana [Caruana]</div>
+        <div class="role">ЗГС СМИ</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/37?set=set4" class="avatar" alt="Mike_Watkins">
+        <div class="nickname">Mike_Watkins [watkins]</div>
+        <div class="role">Следящий МЗ</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/38?set=set4" class="avatar" alt="Brain_Barrington">
+        <div class="nickname">Brain_Barrington [B.Barrington]</div>
+        <div class="role">Следящий МЮ</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/39?set=set4" class="avatar" alt="Diego_Namikadze">
+        <div class="nickname">Diego_Namikadze [Namikadze]</div>
+        <div class="role">ЗГС Мафий</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/40?set=set4" class="avatar" alt="Jackson_Quincy">
+        <div class="nickname">Jackson_Quincy [Quincy]</div>
+        <div class="role">Следящий СМИ</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/41?set=set4" class="avatar" alt="Suki_Yamasaki">
+        <div class="nickname">Suki_Yamasaki [S.Yamasaki]</div>
+        <div class="role">Следящий Гетто/Мафии</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/42?set=set4" class="avatar" alt="Mason_Belserion">
+        <div class="nickname">Mason_Belserion [M.Belserion]</div>
+        <div class="role">Следящий МЗ</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/43?set=set4" class="avatar" alt="Fasy_Damiano">
+        <div class="nickname">Fasy_Damiano [Damiano]</div>
+        <div class="role">Следящий СМИ</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/44?set=set4" class="avatar" alt="Akira_Crisps">
+        <div class="nickname">Akira_Crisps [A.Crisps]</div>
+        <div class="role">Следящий МО</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/45?set=set4" class="avatar" alt="Dorian_Romero">
+        <div class="nickname">Dorian_Romero [D.Romero]</div>
+        <div class="role">Следящий МО</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/46?set=set4" class="avatar" alt="Barmalleo_Obormotto">
+        <div class="nickname">Barmalleo_Obormotto [B.Obormotto]</div>
+        <div class="role">Хелпер</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/47?set=set4" class="avatar" alt="Ernesto_Laymega">
+        <div class="nickname">Ernesto_Laymega [E.Laymega]</div>
+        <div class="role">Хелпер</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/48?set=set4" class="avatar" alt="Gera_Guerra">
+        <div class="nickname">Gera_Guerra [G.Guerra]</div>
+        <div class="role">Хелпер</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/49?set=set4" class="avatar" alt="Eli_Uzi">
+        <div class="nickname">Eli_Uzi [E.Uzi]</div>
+        <div class="role">Хелпер</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/50?set=set4" class="avatar" alt="Nello_Shelby">
+        <div class="nickname">Nello_Shelby [Nel.Shelby]</div>
+        <div class="role">Хелпер</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/51?set=set4" class="avatar" alt="Jackson_Jacobs">
+        <div class="nickname">Jackson_Jacobs [J.Jacobs]</div>
+        <div class="role">Хелпер</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/52?set=set4" class="avatar" alt="Angel_Playboi">
+        <div class="nickname">Angel_Playboi [A.Playboi]</div>
+        <div class="role">Хелпер</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/53?set=set4" class="avatar" alt="Denn_Campbell">
+        <div class="nickname">Denn_Campbell [Den.Campbell]</div>
+        <div class="role">Хелпер</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/54?set=set4" class="avatar" alt="Justin_Rock">
+        <div class="nickname">Justin_Rock [J.Rock]</div>
+        <div class="role">Хелпер</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/55?set=set4" class="avatar" alt="Roy_Nostra">
+        <div class="nickname">Roy_Nostra [R.Nostra]</div>
+        <div class="role">Хелпер</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/56?set=set4" class="avatar" alt="Sergeo_Platonov">
+        <div class="nickname">Sergeo_Platonov [S.Platonov]</div>
+        <div class="role">Хелпер</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/57?set=set4" class="avatar" alt="Walton_Shinoda">
+        <div class="nickname">Walton_Shinoda [W.Shinoda]</div>
+        <div class="role">Хелпер</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/58?set=set4" class="avatar" alt="Marabunta_Namikadze">
+        <div class="nickname">Marabunta_Namikadze [Marabunta]</div>
+        <div class="role">Хелпер</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/59?set=set4" class="avatar" alt="Konstantin_Kingston">
+        <div class="nickname">Konstantin_Kingston [K.Kingston]</div>
+        <div class="role">Хелпер</div>
+    </div>
+</div>
+<div class="admin-card">
+    <div class="card-content">
+        <img src="https://robohash.org/60?set=set4" class="avatar" alt="Barry_Bloom">
+        <div class="nickname">Barry_Bloom [B.Bloom]</div>
+        <div class="role">Хелпер</div>
+    </div>
+        </div>
+    </main>
+    <div class="music-panel">
+        <button class="music-btn" id="playBtn"><i class="fas fa-music"></i></button>
+        <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5">
+    </div>
+    <script>
+        const bgMusic = new Audio('https://cdn.pixabay.com/audio/2023/10/12/audio_8a0c7d0d0e.mp3');
+        bgMusic.loop = true;
+
+        document.getElementById('playBtn').addEventListener('click', () => {
+            bgMusic.paused ? bgMusic.play() : bgMusic.pause();
+        });
+
+        document.getElementById('volume').addEventListener('input', (e) => {
+            bgMusic.volume = e.target.value;
+        });
+    </script>
+</body>
+</html>
