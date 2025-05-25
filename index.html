@@ -631,30 +631,36 @@
         </div>
     </main>
 <div class="music-panel">
-    <button class="music-btn" id="playBtn"><i class="fas fa-play"></i></button>
+    <button class="music-btn" id="playBtn"><i class="fas fa-pause"></i></button>
     <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5">
 </div>
 
 <script>
-    // Используем рабочий аудио-ресурс с поддержкой CORS
-    const bgMusic = new Audio('https://dl1.mp3party.net/online/11134769.mp3');
+    const bgMusic = new Audio('trec.mp3'); // Указываем локальный файл
     bgMusic.loop = true;
     bgMusic.volume = 0.5;
 
     const playBtn = document.getElementById('playBtn');
     const volumeControl = document.getElementById('volume');
 
+    // Пытаемся запустить автоматическое воспроизведение при загрузке
+    document.addEventListener('DOMContentLoaded', () => {
+        bgMusic.play()
+            .then(() => {
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            })
+            .catch(error => {
+                console.log('Требуется взаимодействие пользователя');
+                // Показываем кнопку воспроизведения если автозапуск не удался
+                playBtn.style.display = 'block';
+            });
+    });
+
     // Обработчик клика по кнопке
     playBtn.addEventListener('click', () => {
         if (bgMusic.paused) {
-            bgMusic.play()
-                .then(() => {
-                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                })
-                .catch(error => {
-                    console.error('Ошибка воспроизведения:', error);
-                    alert('Разрешите воспроизведение аудио в браузере');
-                });
+            bgMusic.play();
+            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
         } else {
             bgMusic.pause();
             playBtn.innerHTML = '<i class="fas fa-play"></i>';
@@ -669,7 +675,7 @@
     // Обработчик ошибок аудио
     bgMusic.addEventListener('error', (error) => {
         console.error('Ошибка загрузки аудио:', error);
-        alert('Не удалось загрузить аудиофайл');
+        alert('Файл trec.mp3 не найден или не может быть загружен');
     });
 </script>
 </body>
