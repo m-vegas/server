@@ -3,146 +3,405 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Приватный чат по ключу</title>
+    <title>Приватный чат Red-Rock</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --blood-red: #8B0000;
+            --gold: #FFD700;
+            --cyber-blue: #00FFFF;
+            --dark-bg: #0A0A1F;
+            --card-bg: rgba(20, 20, 40, 0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Oxanium', cursive;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            background: var(--dark-bg);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(ellipse at center, #1a1a40 0%, #0A0A1F 100%);
+            animation: pulse 10s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .title {
+            font-size: 4rem;
+            background: linear-gradient(45deg, var(--blood-red), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px var(--blood-red); }
+            to { text-shadow: 0 0 30px var(--gold); }
+        }
+
+        .chat-container {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f5f5f5;
         }
-        .container {
-            background-color: white;
+
+        .connection-section {
+            background: var(--card-bg);
+            border: 2px solid var(--blood-red);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .connection-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 0%, rgba(255, 215, 0, 0.05) 50%, transparent 100%);
+            animation: scan 6s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .key-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .key-display {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .key-input {
+            flex-grow: 1;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--cyber-blue);
             border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            color: white;
+            font-size: 1rem;
         }
-        h1 {
-            color: #333;
-            text-align: center;
+
+        .key-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
-        .connection-section, .chat-section {
-            margin-bottom: 20px;
+
+        .btn {
+            padding: 12px 20px;
+            background: linear-gradient(45deg, var(--blood-red), var(--gold));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
         }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(0, 255, 255, 0.2);
+            border: 1px solid var(--cyber-blue);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 255, 255, 0.3);
+        }
+
         .chat-section {
             display: none;
+            background: var(--card-bg);
+            border: 2px solid var(--blood-red);
+            border-radius: 15px;
+            padding: 20px;
         }
-        input, button {
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
+
         #messages {
-            height: 300px;
+            height: 400px;
             overflow-y: auto;
-            border: 1px solid #ddd;
+            margin-bottom: 20px;
             padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 4px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 8px;
         }
+
         .message {
-            margin-bottom: 10px;
-            padding: 8px;
-            border-radius: 4px;
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            max-width: 70%;
+            word-wrap: break-word;
         }
+
         .my-message {
-            background-color: #e6f7ff;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid var(--cyber-blue);
+            margin-left: auto;
             text-align: right;
         }
+
         .their-message {
-            background-color: #f0f0f0;
+            background: rgba(139, 0, 0, 0.2);
+            border: 1px solid var(--blood-red);
+            margin-right: auto;
         }
+
+        .message-input {
+            display: flex;
+            gap: 10px;
+        }
+
         #messageInput {
-            width: calc(100% - 90px);
+            flex-grow: 1;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--cyber-blue);
+            border-radius: 8px;
+            color: white;
         }
-        #sendButton {
-            width: 80px;
+
+        .status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .connected {
+            color: var(--cyber-blue);
+            border: 1px solid var(--cyber-blue);
+        }
+
+        .disconnected {
+            color: var(--blood-red);
+            border: 1px solid var(--blood-red);
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .copy-btn:hover {
+            color: var(--cyber-blue);
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @media (max-width: 600px) {
+            .title { font-size: 2.5rem; }
+            .key-display { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Приватный чат</h1>
-        
-        <div class="connection-section" id="connectionSection">
-            <h2>Подключение</h2>
-            <p>Введите общий ключ для подключения к чату:</p>
-            <input type="text" id="chatKey" placeholder="Введите общий ключ">
-            <button id="connectButton">Подключиться</button>
-            <p id="connectionStatus">Ожидание подключения...</p>
+    <div class="matrix-bg"></div>
+    <header class="header">
+        <h1 class="title">Red-Rock Чат</h1>
+    </header>
+
+    <div class="chat-container">
+        <div class="connection-section">
+            <div class="key-section">
+                <h3>Ваш ключ чата:</h3>
+                <div class="key-display">
+                    <input type="text" id="generatedKey" class="key-input" readonly>
+                    <button id="copyKeyBtn" class="copy-btn tooltip">
+                        <i class="far fa-copy"></i>
+                        <span class="tooltiptext">Копировать ключ</span>
+                    </button>
+                    <button id="generateNewKeyBtn" class="btn btn-secondary">Новый ключ</button>
+                </div>
+                <p>Отправьте этот ключ вашему собеседнику</p>
+            </div>
+
+            <div class="key-section">
+                <h3>Или введите ключ собеседника:</h3>
+                <div class="key-display">
+                    <input type="text" id="friendKey" class="key-input" placeholder="Введите ключ собеседника">
+                    <button id="connectBtn" class="btn">Подключиться</button>
+                </div>
+            </div>
+
+            <div id="connectionStatus" class="status disconnected">Ожидание подключения...</div>
         </div>
-        
+
         <div class="chat-section" id="chatSection">
-            <h2>Чат</h2>
             <div id="messages"></div>
-            <div>
-                <input type="text" id="messageInput" placeholder="Введите сообщение">
-                <button id="sendButton">Отправить</button>
+            <div class="message-input">
+                <input type="text" id="messageInput" placeholder="Введите сообщение...">
+                <button id="sendBtn" class="btn">Отправить</button>
             </div>
         </div>
     </div>
 
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
     <script>
         // Элементы DOM
-        const connectionSection = document.getElementById('connectionSection');
-        const chatSection = document.getElementById('chatSection');
-        const chatKeyInput = document.getElementById('chatKey');
-        const connectButton = document.getElementById('connectButton');
+        const generatedKeyInput = document.getElementById('generatedKey');
+        const copyKeyBtn = document.getElementById('copyKeyBtn');
+        const generateNewKeyBtn = document.getElementById('generateNewKeyBtn');
+        const friendKeyInput = document.getElementById('friendKey');
+        const connectBtn = document.getElementById('connectBtn');
         const connectionStatus = document.getElementById('connectionStatus');
+        const chatSection = document.getElementById('chatSection');
         const messagesDiv = document.getElementById('messages');
         const messageInput = document.getElementById('messageInput');
-        const sendButton = document.getElementById('sendButton');
-        
+        const sendBtn = document.getElementById('sendBtn');
+
         // Переменные состояния
-        let chatChannel = null;
-        let isConnected = false;
         let peer = null;
-        let myId = null;
-        
+        let chatChannel = null;
+        let currentKey = generateKey();
+        generatedKeyInput.value = currentKey;
+
+        // Генерация ключа
+        function generateKey() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < 12; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        // Копирование ключа
+        copyKeyBtn.addEventListener('click', () => {
+            generatedKeyInput.select();
+            document.execCommand('copy');
+            
+            // Визуальная обратная связь
+            const originalIcon = copyKeyBtn.innerHTML;
+            copyKeyBtn.innerHTML = '<i class="fas fa-check"></i>';
+            setTimeout(() => {
+                copyKeyBtn.innerHTML = originalIcon;
+            }, 2000);
+        });
+
+        // Генерация нового ключа
+        generateNewKeyBtn.addEventListener('click', () => {
+            currentKey = generateKey();
+            generatedKeyInput.value = currentKey;
+            alert('Новый ключ сгенерирован! Отправьте его собеседнику.');
+        });
+
         // Инициализация PeerJS
         function initializePeerJS() {
-            // Создаем случайный ID для пользователя
-            myId = 'user-' + Math.random().toString(36).substr(2, 9);
+            // Создаем ID на основе ключа
+            const myId = 'redrock-' + hashCode(currentKey);
             
-            // Инициализируем PeerJS
             peer = new Peer(myId);
             
             peer.on('open', (id) => {
                 console.log('Мой ID: ', id);
-                connectionStatus.textContent = 'Готов к подключению. Введите ключ и нажмите "Подключиться"';
+                updateStatus('Готов к подключению', false);
             });
             
             peer.on('connection', (conn) => {
-                console.log('Получено входящее соединение');
+                console.log('Входящее соединение от:', conn.peer);
                 setupConnection(conn);
             });
             
             peer.on('error', (err) => {
                 console.error('Ошибка PeerJS:', err);
-                connectionStatus.textContent = 'Ошибка: ' + err.message;
+                updateStatus('Ошибка: ' + err.message, true);
             });
         }
-        
+
         // Настройка соединения
         function setupConnection(conn) {
             chatChannel = conn;
             
             chatChannel.on('open', () => {
                 console.log('Соединение установлено');
-                isConnected = true;
-                connectionStatus.textContent = 'Соединение установлено!';
-                connectionSection.style.display = 'none';
+                updateStatus('Соединение установлено!', false);
                 chatSection.style.display = 'block';
             });
             
@@ -153,37 +412,35 @@
             
             chatChannel.on('close', () => {
                 console.log('Соединение закрыто');
-                isConnected = false;
-                connectionStatus.textContent = 'Соединение закрыто. Введите ключ для повторного подключения.';
-                connectionSection.style.display = 'block';
+                updateStatus('Соединение закрыто', true);
                 chatSection.style.display = 'none';
             });
             
             chatChannel.on('error', (err) => {
                 console.error('Ошибка соединения:', err);
-                connectionStatus.textContent = 'Ошибка соединения: ' + err.message;
+                updateStatus('Ошибка соединения: ' + err.message, true);
             });
         }
-        
+
         // Подключение к другому пользователю
         function connectToPeer(peerId) {
-            console.log('Попытка подключения к:', peerId);
-            connectionStatus.textContent = 'Подключение к ' + peerId + '...';
+            console.log('Подключение к:', peerId);
+            updateStatus('Подключение к ' + peerId + '...', false);
             
             const conn = peer.connect(peerId);
             setupConnection(conn);
         }
-        
+
         // Отправка сообщения
         function sendMessage() {
             const message = messageInput.value.trim();
-            if (message && isConnected) {
+            if (message && chatChannel && chatChannel.open) {
                 chatChannel.send(message);
                 addMessage(message, true);
                 messageInput.value = '';
             }
         }
-        
+
         // Добавление сообщения в чат
         function addMessage(message, isMyMessage) {
             const messageDiv = document.createElement('div');
@@ -193,44 +450,51 @@
             messagesDiv.appendChild(messageDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
-        
+
+        // Обновление статуса
+        function updateStatus(text, isError) {
+            connectionStatus.textContent = text;
+            connectionStatus.className = isError ? 'status disconnected' : 'status connected';
+        }
+
+        // Хэш-функция для генерации ID
+        function hashCode(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            return Math.abs(hash).toString(36);
+        }
+
         // Обработчики событий
-        connectButton.addEventListener('click', () => {
-            const key = chatKeyInput.value.trim();
-            if (key) {
-                // Генерируем ID другого пользователя на основе ключа
-                const otherPeerId = 'user-' + hashCode(key);
+        connectBtn.addEventListener('click', () => {
+            const friendKey = friendKeyInput.value.trim();
+            if (friendKey) {
+                // Генерируем ID другого пользователя на основе его ключа
+                const otherPeerId = 'redrock-' + hashCode(friendKey);
+                
+                if (!peer) {
+                    initializePeerJS();
+                }
+                
                 connectToPeer(otherPeerId);
+            } else {
+                alert('Пожалуйста, введите ключ собеседника');
             }
         });
-        
-        sendButton.addEventListener('click', sendMessage);
+
+        sendBtn.addEventListener('click', sendMessage);
         
         messageInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 sendMessage();
             }
         });
-        
-        // Хэш-функция для генерации ID из ключа
-        function hashCode(str) {
-            let hash = 0;
-            for (let i = 0; i < str.length; i++) {
-                const char = str.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash; // Преобразуем в 32-битное целое число
-            }
-            return Math.abs(hash).toString(36);
-        }
-        
-        // Инициализируем при загрузке страницы
-        window.addEventListener('load', () => {
-            // Подключаем PeerJS библиотеку
-            const script = document.createElement('script');
-            script.src = 'https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js';
-            script.onload = initializePeerJS;
-            document.head.appendChild(script);
-        });
+
+        // Инициализация при загрузке
+        window.addEventListener('load', initializePeerJS);
     </script>
 </body>
 </html>
