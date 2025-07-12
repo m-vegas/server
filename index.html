@@ -3,1019 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vegas+ | От бомжа до мажора</title>
+    <title>Скоро что-то будет!</title>
     <style>
-        :root {
-            --primary: #ffd700;
-            --secondary: #c0a050;
-            --dark: #1a1a1a;
-            --light: #f8f8f8;
-            --success: #4caf50;
-            --danger: #f44336;
-            --glass: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-        }
-        
-        * {
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            color: var(--light);
-            min-height: 100vh;
-            overflow-x: hidden;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
         }
-        
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
-        
-        .loading-screen {
-            position: fixed;
+
+        .coming-soon {
+            text-align: center;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 5rem;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: pulse 2s infinite;
+            position: relative;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            }
+            50% {
+                transform: scale(1.05);
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            }
+            100% {
+                transform: scale(1);
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        p {
+            font-size: 1.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .particles {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--dark);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 0.5s;
+            z-index: 1;
         }
-        
-        .loading-screen h1 {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 2rem;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-        
-        .loading-bar {
-            width: 300px;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .loading-progress {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 10px;
-            transition: width 0.3s;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s, transform 0.5s;
-        }
-        
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo span {
-            color: var(--light);
-            margin-left: 10px;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 20px;
-        }
-        
-        .stat {
-            background: var(--glass);
-            padding: 10px 20px;
-            border-radius: 10px;
-            border: 1px solid var(--glass-border);
-            text-align: center;
-        }
-        
-        .stat-value {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        
-        .stat-label {
-            font-size: 0.8rem;
-            opacity: 0.8;
-        }
-        
-        .main-content {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .clicker-section {
-            flex: 2;
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-        
-        .character {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 30px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 5px solid var(--primary);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-            transition: all 0.3s;
-            position: relative;
-        }
-        
-        .character img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .click-btn {
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border: none;
-            color: var(--dark);
-            font-size: 1.5rem;
-            padding: 15px 40px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
-            margin-bottom: 20px;
-        }
-        
-        .click-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.6);
-        }
-        
-        .click-btn:active {
-            transform: translateY(0);
-            box-shadow: 0 5px 10px rgba(255, 215, 0, 0.4);
-        }
-        
-        .click-power {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-        }
-        
-        .click-power span {
-            color: var(--primary);
-            font-weight: bold;
-        }
-        
-        .status-section {
-            flex: 1;
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .status-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--primary);
-            text-align: center;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--glass-border);
-        }
-        
-        .status-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .status-label {
-            font-weight: bold;
-        }
-        
-        .status-value {
-            color: var(--primary);
-        }
-        
-        .upgrades-section {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .section-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--primary);
-            text-align: center;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--glass-border);
-        }
-        
-        .upgrades-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-        }
-        
-        .upgrade {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            padding: 15px;
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s;
-        }
-        
-        .upgrade:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .upgrade-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .upgrade-name {
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        
-        .upgrade-level {
-            background: var(--primary);
-            color: var(--dark);
-            padding: 3px 8px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-        
-        .upgrade-description {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-bottom: 10px;
-        }
-        
-        .upgrade-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .upgrade-price {
-            color: var(--primary);
-            font-weight: bold;
-        }
-        
-        .upgrade-btn {
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border: none;
-            color: var(--dark);
-            padding: 5px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        
-        .upgrade-btn:disabled {
-            background: gray;
-            cursor: not-allowed;
-        }
-        
-        .prestige-section {
-            margin-top: 30px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            padding: 20px;
-            border: 2px dashed var(--primary);
-            text-align: center;
-        }
-        
-        .prestige-btn {
-            background: linear-gradient(45deg, #9c27b0, #673ab7);
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            padding: 15px 40px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(156, 39, 176, 0.4);
-            margin-top: 15px;
-        }
-        
-        .prestige-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(156, 39, 176, 0.6);
-        }
-        
-        .prestige-btn:disabled {
-            background: gray;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--success);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transform: translateX(200%);
-            transition: transform 0.3s;
-            z-index: 100;
-        }
-        
-        .notification.show {
-            transform: translateX(0);
-        }
-        
-        .notification.error {
-            background: var(--danger);
-        }
-        
+
         .particle {
             position: absolute;
-            background: var(--primary);
+            background: rgba(255, 255, 255, 0.5);
             border-radius: 50%;
-            pointer-events: none;
-            z-index: 10;
+            animation: float-particle linear infinite;
         }
-        
-        @media (max-width: 768px) {
-            .main-content {
-                flex-direction: column;
+
+        @keyframes float-particle {
+            to {
+                transform: translateY(-100vh);
             }
-            
-            .stats {
-                flex-direction: column;
-                gap: 10px;
+        }
+
+        .glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: glow-pulse 4s ease infinite;
+        }
+
+        @keyframes glow-pulse {
+            0% {
+                opacity: 0.5;
             }
-            
-            .upgrades-grid {
-                grid-template-columns: 1fr;
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.5;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 1s ease-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
             }
         }
     </style>
 </head>
 <body>
-    <div class="loading-screen">
-        <h1>Vegas<span>+</span></h1>
-        <div class="loading-bar">
-            <div class="loading-progress" id="loadingProgress"></div>
-        </div>
+    <div class="glow"></div>
+    <div class="particles" id="particles"></div>
+    
+    <div class="coming-soon">
+        <h1>Тут что-то скоро будет</h1>
+        <p>Мы работаем над чем-то удивительным!</p>
     </div>
-    
-    <div class="container" id="gameContainer">
-        <header>
-            <div class="logo">Vegas<span>+</span></div>
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-value" id="moneyDisplay">$0</div>
-                    <div class="stat-label">Деньги</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value" id="prestigeDisplay">0</div>
-                    <div class="stat-label">Престиж</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value" id="incomeDisplay">$0/сек</div>
-                    <div class="stat-label">Доход</div>
-                </div>
-            </div>
-        </header>
-        
-        <div class="main-content">
-            <div class="clicker-section">
-                <div class="character" id="character">
-                    <img src="https://i.imgur.com/JW7QZ4x.png" alt="Бомж" id="characterImage">
-                </div>
-                <button class="click-btn" id="clickBtn">Заработать</button>
-                <div class="click-power">Сила клика: <span id="clickPowerDisplay">$1</span></div>
-            </div>
-            
-            <div class="status-section">
-                <h3 class="status-title">Статус</h3>
-                <div class="status-item">
-                    <span class="status-label">Уровень:</span>
-                    <span class="status-value" id="levelDisplay">Бомж</span>
-                </div>
-                <div class="status-item">
-                    <span class="status-label">Всего заработано:</span>
-                    <span class="status-value" id="totalEarnedDisplay">$0</span>
-                </div>
-                <div class="status-item">
-                    <span class="status-label">Всего кликов:</span>
-                    <span class="status-value" id="totalClicksDisplay">0</span>
-                </div>
-                <div class="status-item">
-                    <span class="status-label">Игровое время:</span>
-                    <span class="status-value" id="playTimeDisplay">0:00</span>
-                </div>
-                <div class="status-item">
-                    <span class="status-label">Следующий уровень:</span>
-                    <span class="status-value" id="nextLevelDisplay">$1,000</span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="upgrades-section">
-            <h3 class="section-title">Улучшения</h3>
-            <div class="upgrades-grid" id="upgradesGrid">
-                <!-- Upgrades will be added here dynamically -->
-            </div>
-        </div>
-        
-        <div class="prestige-section">
-            <h3 class="section-title">Престиж</h3>
-            <p>Сбросьте все прогресс за бонусные множители!</p>
-            <p>Доступно при достижении <span id="prestigeRequirement">$1,000,000</span></p>
-            <p>Текущий бонус: <span id="prestigeBonus">x1.0</span></p>
-            <button class="prestige-btn" id="prestigeBtn" disabled>Престиж</button>
-        </div>
-    </div>
-    
-    <div class="notification" id="notification"></div>
-    
+
     <script>
-        // Game state
-        const gameState = {
-            money: 0,
-            totalEarned: 0,
-            totalClicks: 0,
-            clickPower: 1,
-            income: 0,
-            prestige: 0,
-            prestigeBonus: 1,
-            playTime: 0,
-            upgrades: {
-                clickPower: { level: 0, price: 50, multiplier: 2 },
-                autoClicker: { level: 0, price: 100, income: 1 },
-                lottery: { level: 0, price: 500, chance: 0.1, multiplier: 10 },
-                stocks: { level: 0, price: 1000, income: 5 },
-                realEstate: { level: 0, price: 5000, income: 20 },
-                casino: { level: 0, price: 10000, income: 50, risk: 0.2 },
-                crypto: { level: 0, price: 50000, income: 200, volatility: 0.3 },
-                business: { level: 0, price: 100000, income: 1000 },
-                bank: { level: 0, price: 500000, income: 5000 },
-                empire: { level: 0, price: 1000000, income: 20000 }
-            },
-            lastUpdate: Date.now()
-        };
-        
-        // Character levels
-        const characterLevels = [
-            { name: "Бомж", image: "https://i.imgur.com/JW7QZ4x.png", threshold: 0 },
-            { name: "Бездомный", image: "https://i.imgur.com/5XwZQ9a.png", threshold: 1000 },
-            { name: "Рабочий", image: "https://i.imgur.com/8Q9ZQ9a.png", threshold: 5000 },
-            { name: "Офисный работник", image: "https://i.imgur.com/9XwZQ9a.png", threshold: 20000 },
-            { name: "Менеджер", image: "https://i.imgur.com/7XwZQ9a.png", threshold: 50000 },
-            { name: "Предприниматель", image: "https://i.imgur.com/6XwZQ9a.png", threshold: 100000 },
-            { name: "Бизнесмен", image: "https://i.imgur.com/4XwZQ9a.png", threshold: 500000 },
-            { name: "Миллионер", image: "https://i.imgur.com/3XwZQ9a.png", threshold: 1000000 },
-            { name: "Инвестор", image: "https://i.imgur.com/2XwZQ9a.png", threshold: 5000000 },
-            { name: "Мажор", image: "https://i.imgur.com/1XwZQ9a.png", threshold: 10000000 }
-        ];
-        
-        // Upgrades data
-        const upgradesData = [
-            {
-                id: "clickPower",
-                name: "Улучшенный клик",
-                description: "Увеличивает доход за клик",
-                priceGrowth: 1.5,
-                getPrice: function() { return Math.floor(this.basePrice * Math.pow(this.priceGrowth, gameState.upgrades[this.id].level)) },
-                basePrice: 50,
-                effect: "x" + gameState.upgrades.clickPower.multiplier + " за клик"
-            },
-            {
-                id: "autoClicker",
-                name: "Автокликер",
-                description: "Пассивный доход каждую секунду",
-                priceGrowth: 1.4,
-                getPrice: function() { return Math.floor(this.basePrice * Math.pow(this.priceGrowth, gameState.upgrades[this.id].level)) },
-                basePrice: 100,
-                effect: "+$" + gameState.upgrades.autoClicker.income + "/сек"
-            },
-            {
-                id: "lottery",
-                name: "Лотерея",
-                description: "Шанс получить большой куш при клике",
-                priceGrowth: 1.6,
-                getPrice: function() { return Math.floor(this.basePrice * Math.pow(this.priceGrowth, gameState.upgrades[this.id].level)) },
-                basePrice: 500,
-                effect: gameState.upgrades.lottery.chance * 100 + "% на x" + gameState.upgrades.lottery.multiplier
-            },
-            {
-                id: "stocks",
-                name: "Акции",
-                description: "Стабильный доход от инвестиций",
-                priceGrowth: 1.5,
-                getPrice: function() { return Math.floor(this.basePrice * Math.pow(this.priceGrowth, gameState.upgrades[this.id].level)) },
-                basePrice: 1000,
-                effect: "+$" + gameState.upgrades.stocks.income + "/сек"
-            },
-            {
-                id: "realEstate",
-                name: "Недвижимость",
-                description: "Доход от аренды имущества",
-                priceGrowth: 1.5,
-                getPrice: function() { return Math.floor(this.basePrice * Math.pow(this.priceGrowth, gameState.upgrades[this.id].level)) },
-                basePrice: 5000,
-                effect: "+$" + gameState.upgrades.realEstate.income + "/сек"
-            },
-            {
-                id: "casino",
-                name: "Казино",
-                description: "Высокий доход с небольшим риском",
-                priceGrowth: 1.6,
-                getPrice: function() { return Math.floor(this.basePrice * Math.pow(this.priceGrowth, gameState.upgrades[this.id].level)) },
-                basePrice: 10000,
-                effect: "+$" + gameState.upgrades.casino.income + "/сек (риск: " + (gameState.upgrades.casino.risk * 100) + "%)"
-            },
-            {
-                id: "crypto",
-                name: "Криптовалюта",
-                description: "Очень высокий доход с высокой волатильностью",
-                priceGrowth: 1.7,
-                getPrice: function() { return Math.floor(this.basePrice * Math.pow(this.priceGrowth, gameState.upgrades[this.id].level)) },
-                basePrice: 50000,
-                effect: "+$" + gameState.upgrades.crypto.income + "/сек (риск: " + (gameState.upgrades.crypto.volatility * 100) + "%)"
-            },
-            {
-                id: "business",
-                name: "Бизнес",
-                description: "Собственный прибыльный бизнес",
-                priceGrowth: 1.6,
-                getPrice: function() { return Math.floor(this.basePrice * Math.pow(this.priceGrowth, gameState.upgrades[this.id].level)) },
-                basePrice: 100000,
-                effect: "+$" + gameState.upgrades.business.income + "/сек"
-            },
-            {
-                id: "bank",
-                name: "Банк",
-                description: "Пассивный доход от банковских операций",
-                priceGrowth: 1.7,
-                getPrice: function() { return Math.floor(this.basePrice * Math.pow(this.priceGrowth, gameState.upgrades[this.id].level)) },
-                basePrice: 500000,
-                effect: "+$" + gameState.upgrades.bank.income + "/сек"
-            },
-            {
-                id: "empire",
-                name: "Империя",
-                description: "Финансовая империя с огромным доходом",
-                priceGrowth: 1.8,
-                getPrice: function() { return Math.floor(this.basePrice * Math.pow(this.priceGrowth, gameState.upgrades[this.id].level)) },
-                basePrice: 1000000,
-                effect: "+$" + gameState.upgrades.empire.income + "/сек"
-            }
-        ];
-        
-        // DOM elements
-        const elements = {
-            loadingScreen: document.querySelector('.loading-screen'),
-            loadingProgress: document.getElementById('loadingProgress'),
-            gameContainer: document.getElementById('gameContainer'),
-            moneyDisplay: document.getElementById('moneyDisplay'),
-            prestigeDisplay: document.getElementById('prestigeDisplay'),
-            incomeDisplay: document.getElementById('incomeDisplay'),
-            clickBtn: document.getElementById('clickBtn'),
-            clickPowerDisplay: document.getElementById('clickPowerDisplay'),
-            character: document.getElementById('character'),
-            characterImage: document.getElementById('characterImage'),
-            levelDisplay: document.getElementById('levelDisplay'),
-            totalEarnedDisplay: document.getElementById('totalEarnedDisplay'),
-            totalClicksDisplay: document.getElementById('totalClicksDisplay'),
-            playTimeDisplay: document.getElementById('playTimeDisplay'),
-            nextLevelDisplay: document.getElementById('nextLevelDisplay'),
-            upgradesGrid: document.getElementById('upgradesGrid'),
-            prestigeBtn: document.getElementById('prestigeBtn'),
-            prestigeRequirement: document.getElementById('prestigeRequirement'),
-            prestigeBonus: document.getElementById('prestigeBonus'),
-            notification: document.getElementById('notification')
-        };
-        
-        // Format money
-        function formatMoney(amount) {
-            if (amount >= 1000000) {
-                return '$' + (amount / 1000000).toFixed(2) + 'M';
-            } else if (amount >= 1000) {
-                return '$' + (amount / 1000).toFixed(1) + 'K';
-            }
-            return '$' + Math.floor(amount);
-        }
-        
-        // Show notification
-        function showNotification(message, isError = false) {
-            elements.notification.textContent = message;
-            elements.notification.className = 'notification' + (isError ? ' error' : '') + ' show';
+        // Создание частиц
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
             
-            setTimeout(() => {
-                elements.notification.classList.remove('show');
-            }, 3000);
-        }
-        
-        // Create particles
-        function createParticles(x, y, amount, color) {
-            for (let i = 0; i < amount; i++) {
+            for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.background = color || `hsl(${Math.random() * 60 + 30}, 100%, 50%)`;
-                particle.style.width = `${Math.random() * 8 + 4}px`;
-                particle.style.height = particle.style.width;
+                particle.classList.add('particle');
                 
-                const posX = x + (Math.random() - 0.5) * 20;
-                const posY = y + (Math.random() - 0.5) * 20;
+                // Случайные параметры
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * window.innerWidth;
+                const duration = Math.random() * 10 + 5;
+                const delay = Math.random() * 5;
                 
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
                 particle.style.left = `${posX}px`;
-                particle.style.top = `${posY}px`;
+                particle.style.bottom = `-${size}px`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
                 
-                document.body.appendChild(particle);
-                
-                const angle = Math.random() * Math.PI * 2;
-                const velocity = Math.random() * 5 + 2;
-                const life = Math.random() * 1000 + 500;
-                
-                const startTime = Date.now();
-                
-                function update() {
-                    const currentTime = Date.now();
-                    const progress = (currentTime - startTime) / life;
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Создание случайных вспышек
+        function createSparkles() {
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    const sparkle = document.createElement('div');
+                    sparkle.classList.add('sparkle');
                     
-                    if (progress >= 1) {
-                        document.body.removeChild(particle);
-                        return;
-                    }
+                    const posX = Math.random() * window.innerWidth;
+                    const posY = Math.random() * window.innerHeight;
+                    const size = Math.random() * 8 + 2;
+                    const duration = Math.random() * 0.5 + 0.5;
                     
-                    const moveX = Math.cos(angle) * velocity * 10 * progress;
-                    const moveY = Math.sin(angle) * velocity * 10 * progress + progress * progress * 100;
+                    sparkle.style.width = `${size}px`;
+                    sparkle.style.height = `${size}px`;
+                    sparkle.style.left = `${posX}px`;
+                    sparkle.style.top = `${posY}px`;
+                    sparkle.style.animationDuration = `${duration}s`;
                     
-                    particle.style.transform = `translate(${moveX}px, ${moveY}px)`;
-                    particle.style.opacity = 1 - progress;
+                    document.body.appendChild(sparkle);
                     
-                    requestAnimationFrame(update);
-                }
-                
-                requestAnimationFrame(update);
-            }
-        }
-        
-        // Update UI
-        function updateUI() {
-            elements.moneyDisplay.textContent = formatMoney(gameState.money);
-            elements.prestigeDisplay.textContent = gameState.prestige;
-            elements.incomeDisplay.textContent = formatMoney(gameState.income) + '/сек';
-            elements.clickPowerDisplay.textContent = formatMoney(gameState.clickPower * gameState.prestigeBonus);
-            elements.totalEarnedDisplay.textContent = formatMoney(gameState.totalEarned);
-            elements.totalClicksDisplay.textContent = gameState.totalClicks;
-            
-            // Update character level
-            const currentLevel = getCurrentLevel();
-            elements.levelDisplay.textContent = currentLevel.name;
-            elements.characterImage.src = currentLevel.image;
-            
-            // Update next level requirement
-            const nextLevel = characterLevels.find(level => level.threshold > gameState.totalEarned);
-            if (nextLevel) {
-                elements.nextLevelDisplay.textContent = formatMoney(nextLevel.threshold);
-            } else {
-                elements.nextLevelDisplay.textContent = "МАКСИМУМ";
-            }
-            
-            // Update play time
-            const hours = Math.floor(gameState.playTime / 3600);
-            const minutes = Math.floor((gameState.playTime % 3600) / 60);
-            const seconds = Math.floor(gameState.playTime % 60);
-            elements.playTimeDisplay.textContent = `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            
-            // Update prestige button
-            const prestigeRequirement = 1000000 * Math.pow(2, gameState.prestige);
-            elements.prestigeRequirement.textContent = formatMoney(prestigeRequirement);
-            elements.prestigeBonus.textContent = `x${(gameState.prestigeBonus).toFixed(1)}`;
-            
-            if (gameState.totalEarned >= prestigeRequirement) {
-                elements.prestigeBtn.disabled = false;
-            } else {
-                elements.prestigeBtn.disabled = true;
-            }
-        }
-        
-        // Get current level
-        function getCurrentLevel() {
-            let currentLevel = characterLevels[0];
-            
-            for (const level of characterLevels) {
-                if (gameState.totalEarned >= level.threshold) {
-                    currentLevel = level;
-                } else {
-                    break;
-                }
-            }
-            
-            return currentLevel;
-        }
-        
-        // Calculate income
-        function calculateIncome() {
-            let income = 0;
-            
-            income += gameState.upgrades.autoClicker.level * gameState.upgrades.autoClicker.income;
-            income += gameState.upgrades.stocks.level * gameState.upgrades.stocks.income;
-            income += gameState.upgrades.realEstate.level * gameState.upgrades.realEstate.income;
-            income += gameState.upgrades.casino.level * gameState.upgrades.casino.income * (1 - gameState.upgrades.casino.risk);
-            income += gameState.upgrades.crypto.level * gameState.upgrades.crypto.income * (1 - gameState.upgrades.crypto.volatility / 2);
-            income += gameState.upgrades.business.level * gameState.upgrades.business.income;
-            income += gameState.upgrades.bank.level * gameState.upgrades.bank.income;
-            income += gameState.upgrades.empire.level * gameState.upgrades.empire.income;
-            
-            return income * gameState.prestigeBonus;
-        }
-        
-        // Update game state
-        function updateGameState() {
-            const now = Date.now();
-            const deltaTime = (now - gameState.lastUpdate) / 1000;
-            gameState.lastUpdate = now;
-            
-            // Add passive income
-            if (gameState.income > 0) {
-                const income = gameState.income * deltaTime;
-                gameState.money += income;
-                gameState.totalEarned += income;
-            }
-            
-            // Update play time
-            gameState.playTime += deltaTime;
-            
-            // Update UI
-            updateUI();
-            
-            // Save game
-            saveGame();
-        }
-        
-        // Buy upgrade
-        function buyUpgrade(upgradeId) {
-            const upgrade = gameState.upgrades[upgradeId];
-            const upgradeData = upgradesData.find(u => u.id === upgradeId);
-            
-            const price = upgradeData.getPrice();
-            
-            if (gameState.money >= price) {
-                gameState.money -= price;
-                upgrade.level++;
-                
-                // Apply upgrade effects
-                switch (upgradeId) {
-                    case 'clickPower':
-                        gameState.clickPower = Math.pow(upgrade.multiplier, upgrade.level);
-                        break;
-                    case 'lottery':
-                        // No immediate effect, handled in click handler
-                        break;
-                    default:
-                        // All other upgrades affect income
-                        gameState.income = calculateIncome();
-                }
-                
-                showNotification(`Улучшение "${upgradeData.name}" куплено!`);
-                createParticles(elements.clickBtn.offsetLeft + elements.clickBtn.offsetWidth / 2, 
-                              elements.clickBtn.offsetTop + elements.clickBtn.offsetHeight / 2, 
-                              20, '#ffd700');
-                
-                renderUpgrades();
-                updateUI();
-            } else {
-                showNotification("Недостаточно денег!", true);
-            }
-        }
-        
-        // Handle click
-        function handleClick() {
-            let earned = gameState.clickPower * gameState.prestigeBonus;
-            gameState.totalClicks++;
-            
-            // Check for lottery win
-            if (gameState.upgrades.lottery.level > 0 && Math.random() < gameState.upgrades.lottery.chance * gameState.upgrades.lottery.level) {
-                const winAmount = earned * gameState.upgrades.lottery.multiplier;
-                earned += winAmount;
-                showNotification(`Лотерейный выигрыш! +${formatMoney(winAmount)}`, false);
-            }
-            
-            gameState.money += earned;
-            gameState.totalEarned += earned;
-            
-            // Create particles
-            createParticles(elements.clickBtn.offsetLeft + elements.clickBtn.offsetWidth / 2, 
-                          elements.clickBtn.offsetTop + elements.clickBtn.offsetHeight / 2, 
-                          10, '#ffd700');
-            
-            updateUI();
-        }
-        
-        // Prestige
-        function handlePrestige() {
-            const prestigeRequirement = 1000000 * Math.pow(2, gameState.prestige);
-            
-            if (gameState.totalEarned >= prestigeRequirement) {
-                gameState.prestige++;
-                gameState.prestigeBonus = 1 + gameState.prestige * 0.2;
-                
-                // Reset game state but keep prestige
-                const prestige = gameState.prestige;
-                const prestigeBonus = gameState.prestigeBonus;
-                
-                Object.assign(gameState, {
-                    money: 0,
-                    totalEarned: 0,
-                    totalClicks: 0,
-                    clickPower: 1,
-                    income: 0,
-                    playTime: 0,
-                    prestige,
-                    prestigeBonus,
-                    upgrades: {
-                        clickPower: { level: 0, price: 50, multiplier: 2 },
-                        autoClicker: { level: 0, price: 100, income: 1 },
-                        lottery: { level: 0, price: 500, chance: 0.1, multiplier: 10 },
-                        stocks: { level: 0, price: 1000, income: 5 },
-                        realEstate: { level: 0, price: 5000, income: 20 },
-                        casino: { level: 0, price: 10000, income: 50, risk: 0.2 },
-                        crypto: { level: 0, price: 50000, income: 200, volatility: 0.3 },
-                        business: { level: 0, price: 100000, income: 1000 },
-                        bank: { level: 0, price: 500000, income: 5000 },
-                        empire: { level: 0, price: 1000000, income: 20000 }
-                    },
-                    lastUpdate: Date.now()
-                });
-                
-                showNotification(`Престиж ${prestige} достигнут! Бонус: x${prestigeBonus.toFixed(1)}`);
-                renderUpgrades();
-                updateUI();
-            }
-        }
-        
-        // Render upgrades
-        function renderUpgrades() {
-            elements.upgradesGrid.innerHTML = '';
-            
-            upgradesData.forEach(upgradeData => {
-                const upgrade = gameState.upgrades[upgradeData.id];
-                const price = upgradeData.getPrice();
-                
-                const upgradeElement = document.createElement('div');
-                upgradeElement.className = 'upgrade';
-                
-                upgradeElement.innerHTML = `
-                    <div class="upgrade-header">
-                        <div class="upgrade-name">${upgradeData.name}</div>
-                        <div class="upgrade-level">Ур. ${upgrade.level}</div>
-                    </div>
-                    <div class="upgrade-description">${upgradeData.description}</div>
-                    <div class="upgrade-description">Эффект: ${upgradeData.effect}</div>
-                    <div class="upgrade-footer">
-                        <div class="upgrade-price">${formatMoney(price)}</div>
-                        <button class="upgrade-btn" 
-                                data-upgrade="${upgradeData.id}" 
-                                ${gameState.money < price ? 'disabled' : ''}>
-                            Купить
-                        </button>
-                    </div>
-                `;
-                
-                elements.upgradesGrid.appendChild(upgradeElement);
-            });
-            
-            // Add event listeners to upgrade buttons
-            document.querySelectorAll('.upgrade-btn').forEach(button => {
-                button.addEventListener('click', () => {
-                    buyUpgrade(button.dataset.upgrade);
-                });
-            });
-        }
-        
-        // Save game
-        function saveGame() {
-            localStorage.setItem('vegasPlusSave', JSON.stringify(gameState));
-            
-            // Also save to server if possible (for GitHub Pages you would need an external service)
-            // For this example, we'll just use localStorage
-        }
-        
-        // Load game
-        function loadGame() {
-            const save = localStorage.getItem('vegasPlusSave');
-            if (save) {
-                const parsed = JSON.parse(save);
-                
-                // Merge with default game state to ensure all properties exist
-                Object.assign(gameState, parsed);
-                
-                // Recalculate income as it's not stored
-                gameState.income = calculateIncome();
-                
-                // Ensure click power is calculated correctly
-                gameState.clickPower = Math.pow(gameState.upgrades.clickPower.multiplier, gameState.upgrades.clickPower.level);
-                
-                // Ensure prestige bonus is calculated correctly
-                gameState.prestigeBonus = 1 + gameState.prestige * 0.2;
-            }
-        }
-        
-        // Initialize game
-        function initGame() {
-            // Simulate loading
-            let progress = 0;
-            const loadingInterval = setInterval(() => {
-                progress += Math.random() * 10;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(loadingInterval);
-                    
+                    // Удаление после анимации
                     setTimeout(() => {
-                        elements.loadingScreen.style.opacity = '0';
-                        setTimeout(() => {
-                            elements.loadingScreen.style.display = 'none';
-                            elements.gameContainer.style.opacity = '1';
-                            elements.gameContainer.style.transform = 'translateY(0)';
-                        }, 500);
-                    }, 500);
+                        sparkle.remove();
+                    }, duration * 1000);
                 }
-                
-                elements.loadingProgress.style.width = `${progress}%`;
-            }, 100);
-            
-            // Load saved game
-            loadGame();
-            
-            // Set up game loop
-            gameState.lastUpdate = Date.now();
-            setInterval(updateGameState, 1000);
-            
-            // Set up event listeners
-            elements.clickBtn.addEventListener('click', handleClick);
-            elements.prestigeBtn.addEventListener('click', handlePrestige);
-            
-            // Render initial UI
-            renderUpgrades();
-            updateUI();
+            }, 200);
         }
         
-        // Start the game when the page loads
-        window.addEventListener('load', initGame);
+        // Инициализация эффектов
+        window.onload = function() {
+            createParticles();
+            createSparkles();
+            
+            // Добавляем случайные мерцания к заголовку
+            const h1 = document.querySelector('h1');
+            setInterval(() => {
+                if (Math.random() > 0.8) {
+                    h1.style.textShadow = `0 0 ${Math.random() * 30 + 10}px rgba(255, 255, 255, ${Math.random() * 0.5 + 0.5})`;
+                }
+            }, 300);
+        };
     </script>
 </body>
 </html>
