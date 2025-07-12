@@ -3,563 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Приватный чат Red-Rock</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Скоро что-то будет!</title>
     <style>
-        :root {
-            --blood-red: #8B0000;
-            --gold: #FFD700;
-            --cyber-blue: #00FFFF;
-            --dark-bg: #0A0A1F;
-            --card-bg: rgba(20, 20, 40, 0.95);
-        }
-
-        * {
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Oxanium', cursive;
-        }
-
-        body {
-            background: var(--dark-bg);
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             color: white;
-            min-height: 100vh;
-            overflow-x: hidden;
         }
 
-        .matrix-bg {
-            position: fixed;
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .coming-soon {
+            text-align: center;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 5rem;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: pulse 2s infinite;
+            position: relative;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            }
+            50% {
+                transform: scale(1.05);
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            }
+            100% {
+                transform: scale(1);
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        p {
+            font-size: 1.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .particles {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            background: radial-gradient(ellipse at center, #1a1a40 0%, #0A0A1F 100%);
-            animation: pulse 10s infinite ease-in-out;
-        }
-
-        @keyframes pulse {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.2); }
-        }
-
-        .header {
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .title {
-            font-size: 3rem;
-            background: linear-gradient(45deg, var(--blood-red), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
-            animation: glow 2s infinite alternate;
-            margin-bottom: 20px;
-        }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 10px var(--blood-red); }
-            to { text-shadow: 0 0 30px var(--gold); }
-        }
-
-        .chat-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .connection-section {
-            background: var(--card-bg);
-            border: 2px solid var(--blood-red);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .connection-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 0%, rgba(255, 215, 0, 0.05) 50%, transparent 100%);
-            animation: scan 6s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes scan {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) rotate(45deg); }
-        }
-
-        .key-section {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .key-display {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .key-input {
-            flex-grow: 1;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--cyber-blue);
-            border-radius: 8px;
-            color: white;
-            font-size: 1rem;
-        }
-
-        .key-input:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-
-        .btn {
-            padding: 12px 20px;
-            background: linear-gradient(45deg, var(--blood-red), var(--gold));
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-        }
-
-        .btn-secondary {
-            background: rgba(0, 255, 255, 0.2);
-            border: 1px solid var(--cyber-blue);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(0, 255, 255, 0.3);
-        }
-
-        .chat-section {
-            display: none;
-            background: var(--card-bg);
-            border: 2px solid var(--blood-red);
-            border-radius: 15px;
-            padding: 20px;
-        }
-
-        #messages {
-            height: 400px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            border-radius: 8px;
-        }
-
-        .message {
-            margin-bottom: 15px;
-            padding: 10px 15px;
-            border-radius: 8px;
-            max-width: 70%;
-            word-wrap: break-word;
-        }
-
-        .my-message {
-            background: rgba(0, 255, 255, 0.1);
-            border: 1px solid var(--cyber-blue);
-            margin-left: auto;
-            text-align: right;
-        }
-
-        .their-message {
-            background: rgba(139, 0, 0, 0.2);
-            border: 1px solid var(--blood-red);
-            margin-right: auto;
-        }
-
-        .message-input {
-            display: flex;
-            gap: 10px;
-        }
-
-        #messageInput {
-            flex-grow: 1;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--cyber-blue);
-            border-radius: 8px;
-            color: white;
-        }
-
-        .status {
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 8px;
-            background: rgba(0, 0, 0, 0.3);
-            text-align: center;
-        }
-
-        .connected {
-            color: var(--cyber-blue);
-            border: 1px solid var(--cyber-blue);
-        }
-
-        .disconnected {
-            color: var(--blood-red);
-            border: 1px solid var(--blood-red);
-        }
-
-        .copy-btn {
-            background: none;
-            border: none;
-            color: var(--gold);
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .copy-btn:hover {
-            color: var(--cyber-blue);
-        }
-
-        .tooltip {
-            position: relative;
-            display: inline-block;
-        }
-
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 120px;
-            background-color: #555;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px;
-            position: absolute;
             z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s;
         }
 
-        .tooltip .tooltiptext::after {
-            content: "";
+        .particle {
             position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float-particle linear infinite;
         }
 
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
+        @keyframes float-particle {
+            to {
+                transform: translateY(-100vh);
+            }
         }
 
-        @media (max-width: 600px) {
-            .title { font-size: 2rem; }
-            .key-display { flex-direction: column; }
-            .btn { width: 100%; }
+        .glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: glow-pulse 4s ease infinite;
+        }
+
+        @keyframes glow-pulse {
+            0% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.5;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 1s ease-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="matrix-bg"></div>
-    <header class="header">
-        <h1 class="title">Red-Rock Чат</h1>
-    </header>
-
-    <div class="chat-container">
-        <div class="connection-section">
-            <div class="key-section">
-                <h3>Ваш ключ чата:</h3>
-                <div class="key-display">
-                    <input type="text" id="generatedKey" class="key-input" readonly>
-                    <button id="copyKeyBtn" class="copy-btn tooltip">
-                        <i class="far fa-copy"></i>
-                        <span class="tooltiptext">Копировать ключ</span>
-                    </button>
-                    <button id="generateNewKeyBtn" class="btn btn-secondary">Новый ключ</button>
-                </div>
-                <p>Отправьте этот ключ вашему собеседнику</p>
-            </div>
-
-            <div class="key-section">
-                <h3>Или введите ключ собеседника:</h3>
-                <div class="key-display">
-                    <input type="text" id="friendKey" class="key-input" placeholder="Введите ключ собеседника">
-                    <button id="connectBtn" class="btn">Подключиться</button>
-                </div>
-            </div>
-
-            <div id="connectionStatus" class="status disconnected">Ожидание подключения...</div>
-        </div>
-
-        <div class="chat-section" id="chatSection">
-            <div id="messages"></div>
-            <div class="message-input">
-                <input type="text" id="messageInput" placeholder="Введите сообщение..." autocomplete="off">
-                <button id="sendBtn" class="btn">Отправить</button>
-            </div>
-        </div>
+    <div class="glow"></div>
+    <div class="particles" id="particles"></div>
+    
+    <div class="coming-soon">
+        <h1>Тут что-то скоро будет</h1>
+        <p>Мы работаем над чем-то удивительным!</p>
     </div>
 
-    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
     <script>
-        // Элементы DOM
-        const generatedKeyInput = document.getElementById('generatedKey');
-        const copyKeyBtn = document.getElementById('copyKeyBtn');
-        const generateNewKeyBtn = document.getElementById('generateNewKeyBtn');
-        const friendKeyInput = document.getElementById('friendKey');
-        const connectBtn = document.getElementById('connectBtn');
-        const connectionStatus = document.getElementById('connectionStatus');
-        const chatSection = document.getElementById('chatSection');
-        const messagesDiv = document.getElementById('messages');
-        const messageInput = document.getElementById('messageInput');
-        const sendBtn = document.getElementById('sendBtn');
-
-        // Переменные состояния
-        let peer = null;
-        let chatChannel = null;
-        let currentKey = generateKey();
-        generatedKeyInput.value = currentKey;
-        let connectionAttempts = 0;
-        const MAX_ATTEMPTS = 3;
-
-        // Генерация ключа
-        function generateKey() {
-            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-            let result = '';
-            for (let i = 0; i < 8; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return 'RR-' + result;
-        }
-
-        // Копирование ключа
-        copyKeyBtn.addEventListener('click', () => {
-            generatedKeyInput.select();
-            document.execCommand('copy');
+        // Создание частиц
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
             
-            // Визуальная обратная связь
-            const originalIcon = copyKeyBtn.innerHTML;
-            copyKeyBtn.innerHTML = '<i class="fas fa-check"></i>';
-            setTimeout(() => {
-                copyKeyBtn.innerHTML = originalIcon;
-            }, 2000);
-        });
-
-        // Генерация нового ключа
-        generateNewKeyBtn.addEventListener('click', () => {
-            currentKey = generateKey();
-            generatedKeyInput.value = currentKey;
-            updateStatus('Новый ключ сгенерирован!', false);
-        });
-
-        // Инициализация PeerJS
-        function initializePeerJS() {
-            // Используем облачный сервер PeerJS с настройками
-            peer = new Peer({
-                host: '0.peerjs.com',
-                port: 443,
-                secure: true,
-                debug: 3,
-                config: {
-                    iceServers: [
-                        { urls: 'stun:stun.l.google.com:19302' },
-                        { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }
-                    ]
-                }
-            });
-
-            peer.on('open', (id) => {
-                console.log('PeerJS подключен. ID:', id);
-                connectionAttempts = 0;
-                updateStatus('Готов к подключению', false);
-            });
-
-            peer.on('connection', (conn) => {
-                console.log('Входящее соединение от:', conn.peer);
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
                 
-                // Если уже есть активное соединение, отклоняем новое
-                if (chatChannel && chatChannel.open) {
-                    conn.close();
-                    updateStatus('Соединение уже установлено', false);
-                    return;
-                }
+                // Случайные параметры
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * window.innerWidth;
+                const duration = Math.random() * 10 + 5;
+                const delay = Math.random() * 5;
                 
-                setupConnection(conn);
-            });
-
-            peer.on('error', (err) => {
-                console.error('PeerJS ошибка:', err);
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}px`;
+                particle.style.bottom = `-${size}px`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
                 
-                // Автоматический реконнект при определенных ошибках
-                if (err.type === 'disconnected' || err.type === 'network') {
-                    if (connectionAttempts < MAX_ATTEMPTS) {
-                        connectionAttempts++;
-                        updateStatus(`Повторная попытка подключения (${connectionAttempts}/${MAX_ATTEMPTS})`, true);
-                        setTimeout(() => peer.reconnect(), 2000);
-                    } else {
-                        updateStatus('Не удалось подключиться. Обновите страницу.', true);
-                    }
-                } else {
-                    updateStatus('Ошибка: ' + err.message, true);
-                }
-            });
-        }
-
-        // Настройка соединения
-        function setupConnection(conn) {
-            chatChannel = conn;
-            
-            conn.on('open', () => {
-                console.log('Соединение установлено!');
-                updateStatus('Чат активен', false);
-                chatSection.style.display = 'block';
-                
-                // Отправляем приветственное сообщение
-                addMessage('Соединение установлено! Начните общение.', false);
-            });
-            
-            conn.on('data', (data) => {
-                console.log('Получено сообщение:', data);
-                addMessage(data, false);
-            });
-            
-            conn.on('close', () => {
-                console.log('Соединение закрыто');
-                updateStatus('Соединение закрыто', true);
-                chatSection.style.display = 'none';
-                addMessage('Соединение закрыто', false);
-            });
-            
-            conn.on('error', (err) => {
-                console.error('Ошибка соединения:', err);
-                updateStatus('Ошибка соединения: ' + err.message, true);
-            });
-        }
-
-        // Подключение к другому пользователю
-        function connectToPeer() {
-            const friendKey = friendKeyInput.value.trim();
-            if (!friendKey) {
-                updateStatus('Введите ключ собеседника', true);
-                return;
-            }
-
-            if (!peer || peer.disconnected) {
-                initializePeerJS();
-            }
-
-            // Ждем инициализации peer
-            const checkReady = setInterval(() => {
-                if (peer && peer.id) {
-                    clearInterval(checkReady);
-                    
-                    const otherPeerId = 'redrock-' + hashCode(friendKey);
-                    updateStatus(`Подключение к ${otherPeerId}...`, false);
-                    
-                    // Устанавливаем соединение с таймаутом
-                    const conn = peer.connect(otherPeerId, {
-                        reliable: true,
-                        serialization: 'none',
-                        metadata: { key: currentKey }
-                    });
-
-                    const timeout = setTimeout(() => {
-                        if (!conn.open) {
-                            conn.close();
-                            updateStatus('Таймаут подключения', true);
-                        }
-                    }, 10000);
-
-                    setupConnection(conn);
-                }
-                
-                if (!peer || peer.destroyed) {
-                    clearInterval(checkReady);
-                    updateStatus('Ошибка подключения к серверу', true);
-                }
-            }, 100);
-        }
-
-        // Отправка сообщения
-        function sendMessage() {
-            const message = messageInput.value.trim();
-            if (message && chatChannel && chatChannel.open) {
-                chatChannel.send(message);
-                addMessage(message, true);
-                messageInput.value = '';
+                particlesContainer.appendChild(particle);
             }
         }
-
-        // Добавление сообщения в чат
-        function addMessage(message, isMyMessage) {
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message');
-            messageDiv.classList.add(isMyMessage ? 'my-message' : 'their-message');
-            messageDiv.textContent = message;
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        // Обновление статуса
-        function updateStatus(text, isError) {
-            connectionStatus.textContent = text;
-            connectionStatus.className = isError ? 'status disconnected' : 'status connected';
-        }
-
-        // Хэш-функция для генерации ID
-        function hashCode(str) {
-            return str.split('').reduce((a, b) => {
-                a = ((a << 5) - a) + b.charCodeAt(0);
-                return a & a;
-            }, 0).toString(36).replace('-', '');
-        }
-
-        // Обработчики событий
-        connectBtn.addEventListener('click', connectToPeer);
-        sendBtn.addEventListener('click', sendMessage);
         
-        messageInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-
-        // Инициализация при загрузке
-        window.addEventListener('load', () => {
-            initializePeerJS();
-            
-            // Автоматическая перезагрузка при критических ошибках
-            setTimeout(() => {
-                if (!peer || !peer.id) {
-                    updateStatus('Переподключение...', true);
-                    window.location.reload();
+        // Создание случайных вспышек
+        function createSparkles() {
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    const sparkle = document.createElement('div');
+                    sparkle.classList.add('sparkle');
+                    
+                    const posX = Math.random() * window.innerWidth;
+                    const posY = Math.random() * window.innerHeight;
+                    const size = Math.random() * 8 + 2;
+                    const duration = Math.random() * 0.5 + 0.5;
+                    
+                    sparkle.style.width = `${size}px`;
+                    sparkle.style.height = `${size}px`;
+                    sparkle.style.left = `${posX}px`;
+                    sparkle.style.top = `${posY}px`;
+                    sparkle.style.animationDuration = `${duration}s`;
+                    
+                    document.body.appendChild(sparkle);
+                    
+                    // Удаление после анимации
+                    setTimeout(() => {
+                        sparkle.remove();
+                    }, duration * 1000);
                 }
-            }, 10000);
-        });
+            }, 200);
+        }
+        
+        // Инициализация эффектов
+        window.onload = function() {
+            createParticles();
+            createSparkles();
+            
+            // Добавляем случайные мерцания к заголовку
+            const h1 = document.querySelector('h1');
+            setInterval(() => {
+                if (Math.random() > 0.8) {
+                    h1.style.textShadow = `0 0 ${Math.random() * 30 + 10}px rgba(255, 255, 255, ${Math.random() * 0.5 + 0.5})`;
+                }
+            }, 300);
+        };
     </script>
 </body>
 </html>
