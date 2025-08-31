@@ -13,207 +13,162 @@
         
         body {
             font-family: 'Arial', sans-serif;
-            background: #000;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             height: 100vh;
             color: white;
             overflow: hidden;
-            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
             text-align: center;
             position: relative;
             z-index: 20;
-        }
-        
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%);
-            z-index: 1;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(255, 0, 255, 0.5);
+            backdrop-filter: blur(10px);
+            max-width: 800px;
+            width: 90%;
         }
         
         h1 {
-            font-size: 4rem;
-            margin-bottom: 2rem;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00ff;
-            animation: textGlitch 3s infinite alternate, pulse 1.5s infinite alternate;
+            letter-spacing: 3px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textGlow 2s infinite alternate;
         }
         
-        @keyframes textGlitch {
-            0%, 100% { transform: translate(0); }
-            5% { transform: translate(-2px, -2px); }
-            10% { transform: translate(2px, 2px); }
-            15% { transform: translate(-2px, 2px); }
-            20% { transform: translate(2px, -2px); }
-            50% { transform: translate(0); }
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 0.8; }
-            100% { opacity: 1; }
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 10px rgba(255, 0, 255, 0.7); }
+            100% { text-shadow: 0 0 20px rgba(0, 255, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.5); }
         }
         
         p {
-            font-size: 1.8rem;
-            margin-bottom: 3rem;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
             line-height: 1.6;
-            text-shadow: 0 0 10px #00ffff;
-            animation: colorShift 5s infinite alternate;
-        }
-        
-        @keyframes colorShift {
-            0% { color: #ffffff; }
-            25% { color: #ff00ff; }
-            50% { color: #00ffff; }
-            75% { color: #ffff00; }
-            100% { color: #ffffff; }
+            color: #f0f0f0;
         }
         
         .progress-container {
             width: 100%;
-            height: 30px;
+            height: 20px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            margin: 3rem 0;
+            border-radius: 10px;
+            margin: 2rem 0;
             overflow: hidden;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-            border: 2px solid #00ffff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
         }
         
         .progress-bar {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
-            border-radius: 15px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            border-radius: 10px;
             animation: progress 4s infinite alternate;
-            background-size: 200% 100%;
-            animation: progress 4s infinite alternate, gradientMove 3s infinite linear;
         }
         
         @keyframes progress {
-            0% { width: 10%; }
-            100% { width: 90%; }
-        }
-        
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
+            0% { width: 20%; }
+            100% { width: 85%; }
         }
         
         .countdown {
-            font-size: 3rem;
-            margin: 3rem 0;
+            font-size: 2.5rem;
+            margin: 2rem 0;
             font-weight: bold;
-            text-shadow: 0 0 15px #ffff00;
-            animation: countdownPulse 1s infinite alternate;
+            color: #ffff00;
+            text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
         }
         
-        @keyframes countdownPulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
-        }
-        
-        .music-visualizer {
+        .visualization-container {
+            margin: 3rem 0;
+            height: 200px;
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            height: 150px;
-            margin: 3rem 0;
-            gap: 6px;
-            transform: rotateX(20deg);
-            perspective: 500px;
+            gap: 4px;
         }
         
         .bar {
             width: 12px;
-            background: linear-gradient(to top, #ff00ff, #00ffff, #ffff00);
+            background: linear-gradient(to top, #ff00ff, #00ffff);
             border-radius: 6px 6px 0 0;
             height: 20px;
-            animation: dance 0.8s infinite alternate;
-            animation-delay: calc(var(--i) * 0.05s);
-            box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
-            transform-origin: bottom;
+            transition: height 0.1s ease;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
         }
         
-        @keyframes dance {
-            0% { 
-                height: 20px;
-                transform: scaleY(1);
-            }
-            100% { 
-                height: 150px;
-                transform: scaleY(1.2);
-            }
+        .circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            border: 5px solid rgba(255, 0, 255, 0.3);
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
+            animation: pulse 2s infinite alternate;
         }
         
-        .floating {
-            animation: float 8s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(5deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.3; }
         }
         
         .particles {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 2;
-            overflow: hidden;
+            pointer-events: none;
+            z-index: 10;
         }
         
         .particle {
             position: absolute;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.7);
             border-radius: 50%;
             animation: particleFloat linear infinite;
         }
         
         @keyframes particleFloat {
             0% { 
-                transform: translateY(0) translateX(0) rotate(0deg); 
+                transform: translateY(100vh) translateX(0) rotate(0deg); 
                 opacity: 1;
             }
             100% { 
-                transform: translateY(-100vh) translateX(20vw) rotate(360deg); 
+                transform: translateY(-100px) translateX(20vw) rotate(360deg); 
                 opacity: 0;
             }
         }
         
-        .glitch-effect {
+        .frequency-circle {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgcGF0dGVyblRyYW5zZm9ybT0icm90YXRlKDApIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0icmdiYSgwLDAsMCwwLjEpIj48L3JlY3Q+PGxpbmUgeDE9IjAiIHkxPSIwIiB4Mj0iMTAwIiB5Mj0iMTAwIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIgc3Ryb2tlLXdpZHRoPSIxIj48L2xpbmU+PGxpbmUgeDE9IjEwMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMTAwIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIgc3Ryb2tlLXdpZHRoPSIxIj48L2xpbmU+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIj48L3JlY3Q+PC9zdmc+');
-            opacity: 0.1;
-            mix-blend-mode: overlay;
-            animation: glitch 0.5s infinite alternate;
-            z-index: 5;
-            pointer-events: none;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+            animation: circlePulse 0.5s infinite alternate;
         }
         
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-5px, 5px); }
-            40% { transform: translate(-5px, -5px); }
-            60% { transform: translate(5px, 5px); }
-            80% { transform: translate(5px, -5px); }
-            100% { transform: translate(0); }
+        @keyframes circlePulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.8; }
         }
         
         .vignette {
@@ -222,75 +177,25 @@
             left: 0;
             width: 100%;
             height: 100%;
-            box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.9);
-            z-index: 10;
+            box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.9);
             pointer-events: none;
-        }
-        
-        .scanlines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, 
-                rgba(255, 255, 255, 0) 0%, 
-                rgba(255, 255, 255, 0.06) 50%, 
-                rgba(255, 255, 255, 0) 100%);
-            background-size: 100% 4px;
-            z-index: 15;
-            pointer-events: none;
-            animation: scanline 8s linear infinite;
-        }
-        
-        @keyframes scanline {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 100%; }
-        }
-        
-        .shockwave {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: rgba(255, 0, 255, 0.5);
-            transform: translate(-50%, -50%);
-            animation: shockwave 2s infinite;
-            z-index: 3;
-        }
-        
-        @keyframes shockwave {
-            0% { 
-                width: 20px; 
-                height: 20px; 
-                opacity: 0.8; 
-            }
-            100% { 
-                width: 500px; 
-                height: 500px; 
-                opacity: 0; 
-            }
+            z-index: 5;
         }
         
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
-            p { font-size: 1.4rem; }
+            p { font-size: 1.2rem; }
             .countdown { font-size: 2rem; }
+            .container { width: 95%; padding: 1rem; }
         }
     </style>
 </head>
 <body>
-    <div class="overlay"></div>
-    <div class="particles" id="particles"></div>
-    <div class="glitch-effect"></div>
     <div class="vignette"></div>
-    <div class="scanlines"></div>
-    <div class="shockwave"></div>
+    <div class="particles" id="particles"></div>
     
     <div class="container">
-        <h1 class="floating">ИДУТ ТЕХНИЧЕСКИЕ РАБОТЫ</h1>
+        <h1>Идут технические работы</h1>
         
         <p>Мы создаём для вас нечто грандиозное! Скоро всё заработает!</p>
         
@@ -300,35 +205,40 @@
         
         <div class="countdown">00:00:00</div>
         
-        <div class="music-visualizer">
-            <div class="bar" style="--i: 0"></div>
-            <div class="bar" style="--i: 1"></div>
-            <div class="bar" style="--i: 2"></div>
-            <div class="bar" style="--i: 3"></div>
-            <div class="bar" style="--i: 4"></div>
-            <div class="bar" style="--i: 5"></div>
-            <div class="bar" style="--i: 6"></div>
-            <div class="bar" style="--i: 7"></div>
-            <div class="bar" style="--i: 8"></div>
-            <div class="bar" style="--i: 9"></div>
-            <div class="bar" style="--i: 10"></div>
-            <div class="bar" style="--i: 11"></div>
-            <div class="bar" style="--i: 12"></div>
-            <div class="bar" style="--i: 13"></div>
-            <div class="bar" style="--i: 14"></div>
+        <div class="visualization-container" id="visualizer">
+            <div class="circle"></div>
+            <!-- Bars will be generated by JavaScript -->
         </div>
     </div>
 
-    <audio id="bgMusic" autoplay loop>
+    <audio id="bgMusic" loop>
         <source src="tex.mp3" type="audio/mpeg">
     </audio>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const audio = document.getElementById('bgMusic');
-            const bars = document.querySelectorAll('.bar');
+            const visualizer = document.getElementById('visualizer');
             const countdown = document.querySelector('.countdown');
             const particlesContainer = document.getElementById('particles');
+            
+            // Создаем визуализатор
+            for (let i = 0; i < 64; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.setAttribute('data-index', i);
+                visualizer.appendChild(bar);
+            }
+            
+            // Создаем круги для визуализации частот
+            for (let i = 0; i < 5; i++) {
+                const circle = document.createElement('div');
+                circle.className = 'frequency-circle';
+                circle.style.width = `${100 + i * 50}px`;
+                circle.style.height = `${100 + i * 50}px`;
+                circle.style.animationDelay = `${i * 0.1}s`;
+                visualizer.appendChild(circle);
+            }
             
             // Автовоспроизведение музыки
             const playAudio = () => {
@@ -339,76 +249,106 @@
                     playPromise
                         .then(() => {
                             console.log("Музыка воспроизводится");
+                            setupAudioAnalysis();
                         })
                         .catch(error => {
                             console.log("Автовоспроизведение заблокировано: ", error);
+                            // Попробуем еще раз после взаимодействия с пользователем
+                            document.body.addEventListener('click', () => {
+                                audio.play().then(() => {
+                                    setupAudioAnalysis();
+                                });
+                            }, { once: true });
                         });
                 }
             };
+            
+            // Настройка анализа аудио
+            function setupAudioAnalysis() {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const analyser = audioContext.createAnalyser();
+                const source = audioContext.createMediaElementSource(audio);
+                
+                source.connect(analyser);
+                analyser.connect(audioContext.destination);
+                
+                analyser.fftSize = 256;
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+                
+                // Функция визуализации
+                function visualize() {
+                    requestAnimationFrame(visualize);
+                    
+                    analyser.getByteFrequencyData(dataArray);
+                    
+                    const bars = document.querySelectorAll('.bar');
+                    const circles = document.querySelectorAll('.frequency-circle');
+                    
+                    // Обновляем столбцы визуализатора
+                    bars.forEach((bar, i) => {
+                        const index = Math.floor(i * bufferLength / bars.length);
+                        const value = dataArray[index] / 255;
+                        const height = 20 + value * 180;
+                        bar.style.height = `${height}px`;
+                        
+                        // Изменяем цвет в зависимости от громкости
+                        if (value > 0.8) {
+                            bar.style.background = 'linear-gradient(to top, #ff0000, #ffff00)';
+                            bar.style.boxShadow = '0 0 15px rgba(255, 0, 0, 0.7)';
+                            createParticle(visualizer.offsetLeft + bar.offsetLeft + 6, 
+                                         visualizer.offsetTop + visualizer.offsetHeight - height);
+                        } else if (value > 0.5) {
+                            bar.style.background = 'linear-gradient(to top, #ff00ff, #00ffff)';
+                            bar.style.boxShadow = '0 0 10px rgba(255, 0, 255, 0.7)';
+                        } else {
+                            bar.style.background = 'linear-gradient(to top, #ff00ff, #00ffff)';
+                            bar.style.boxShadow = '0 0 5px rgba(0, 255, 255, 0.5)';
+                        }
+                    });
+                    
+                    // Обновляем круги
+                    circles.forEach((circle, i) => {
+                        const index = Math.floor(i * bufferLength / circles.length);
+                        const value = dataArray[index] / 255;
+                        circle.style.borderWidth = `${2 + value * 5}px`;
+                        circle.style.opacity = 0.2 + value * 0.6;
+                    });
+                }
+                
+                visualize();
+            }
             
             // Попытка автовоспроизведения при загрузке
             playAudio();
             
             // Создание частиц
-            function createParticles() {
-                for (let i = 0; i < 100; i++) {
-                    const particle = document.createElement('div');
-                    particle.classList.add('particle');
-                    
-                    const size = Math.random() * 5 + 2;
-                    const posX = Math.random() * 100;
-                    const posY = Math.random() * 100 + 100;
-                    const duration = Math.random() * 10 + 5;
-                    const delay = Math.random() * 5;
-                    
-                    particle.style.width = `${size}px`;
-                    particle.style.height = `${size}px`;
-                    particle.style.left = `${posX}vw`;
-                    particle.style.top = `${posY}vh`;
-                    particle.style.animationDuration = `${duration}s`;
-                    particle.style.animationDelay = `-${delay}s`;
-                    
-                    // Случайный цвет частицы
-                    const colors = ['#ff00ff', '#00ffff', '#ffff00', '#ffffff'];
-                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    
-                    particlesContainer.appendChild(particle);
-                }
-            }
-            
-            createParticles();
-            
-            // Анимация визуализатора музыки
-            function animateBars() {
-                bars.forEach(bar => {
-                    const randomHeight = Math.floor(Math.random() * 130) + 20;
-                    bar.style.height = `${randomHeight}px`;
-                    
-                    // Добавляем дополнительные эффекты в зависимости от высоты
-                    if (randomHeight > 100) {
-                        bar.style.boxShadow = `0 0 20px rgba(255, 0, 255, 0.9)`;
-                        bar.style.background = `linear-gradient(to top, #ff00ff, #ffff00)`;
-                    } else {
-                        bar.style.boxShadow = `0 0 10px rgba(0, 255, 255, 0.7)`;
-                        bar.style.background = `linear-gradient(to top, #ff00ff, #00ffff, #ffff00)`;
-                    }
-                });
-            }
-            
-            setInterval(animateBars, 100);
-            
-            // Создание шоквейв эффектов
-            function createShockwave() {
-                const shockwave = document.createElement('div');
-                shockwave.classList.add('shockwave');
-                document.body.appendChild(shockwave);
+            function createParticle(x, y) {
+                if (Math.random() > 0.3) return; // Создаем частицы не каждый раз
                 
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 4 + 2;
+                const duration = Math.random() * 3 + 2;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Случайный цвет частицы
+                const colors = ['#ff00ff', '#00ffff', '#ffff00'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+                
+                // Удаляем частицу после анимации
                 setTimeout(() => {
-                    shockwave.remove();
-                }, 2000);
+                    particle.remove();
+                }, duration * 1000);
             }
-            
-            setInterval(createShockwave, 3000);
             
             // Обратный отсчет (примерный)
             let time = 0;
@@ -419,11 +359,6 @@
                 const seconds = (time % 60).toString().padStart(2, '0');
                 countdown.textContent = `${hours}:${minutes}:${seconds}`;
             }, 1000);
-            
-            // Эффект мерцания
-            setInterval(() => {
-                document.body.style.backgroundPosition = `${Math.random() * 100}% ${Math.random() * 100}%`;
-            }, 5000);
         });
     </script>
 </body>
