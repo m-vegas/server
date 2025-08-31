@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Технические работы | Скоро вернемся!</title>
+    <title>Технические работы | Скоро всё заработает!</title>
     <style>
         * {
             margin: 0;
@@ -13,18 +13,11 @@
         
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(-45deg, #0c1445, #1a237e, #311b92, #4527a0);
-            background-size: 400% 400%;
+            background: #000;
             height: 100vh;
             color: white;
             overflow: hidden;
-            animation: gradientBG 15s ease infinite;
-        }
-        
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            perspective: 1000px;
         }
         
         .container {
@@ -33,7 +26,7 @@
             padding: 2rem;
             text-align: center;
             position: relative;
-            z-index: 2;
+            z-index: 20;
         }
         
         .overlay {
@@ -42,44 +35,68 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: radial-gradient(circle at center, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%);
             z-index: 1;
         }
         
         h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-            animation: pulse 2s infinite;
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00ff;
+            animation: textGlitch 3s infinite alternate, pulse 1.5s infinite alternate;
+        }
+        
+        @keyframes textGlitch {
+            0%, 100% { transform: translate(0); }
+            5% { transform: translate(-2px, -2px); }
+            10% { transform: translate(2px, 2px); }
+            15% { transform: translate(-2px, 2px); }
+            20% { transform: translate(2px, -2px); }
+            50% { transform: translate(0); }
         }
         
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
         }
         
         p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            margin-bottom: 3rem;
             line-height: 1.6;
+            text-shadow: 0 0 10px #00ffff;
+            animation: colorShift 5s infinite alternate;
+        }
+        
+        @keyframes colorShift {
+            0% { color: #ffffff; }
+            25% { color: #ff00ff; }
+            50% { color: #00ffff; }
+            75% { color: #ffff00; }
+            100% { color: #ffffff; }
         }
         
         .progress-container {
             width: 100%;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            margin: 2rem 0;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin: 3rem 0;
             overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            border: 2px solid #00ffff;
         }
         
         .progress-bar {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #00bcd4, #3f51b5);
-            border-radius: 10px;
-            animation: progress 5s infinite alternate;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+            border-radius: 15px;
+            animation: progress 4s infinite alternate;
+            background-size: 200% 100%;
+            animation: progress 4s infinite alternate, gradientMove 3s infinite linear;
         }
         
         @keyframes progress {
@@ -87,152 +104,195 @@
             100% { width: 90%; }
         }
         
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+        
         .countdown {
-            font-size: 2.5rem;
-            margin: 2rem 0;
+            font-size: 3rem;
+            margin: 3rem 0;
             font-weight: bold;
+            text-shadow: 0 0 15px #ffff00;
+            animation: countdownPulse 1s infinite alternate;
+        }
+        
+        @keyframes countdownPulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
         }
         
         .music-visualizer {
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            height: 100px;
-            margin: 2rem 0;
-            gap: 4px;
+            height: 150px;
+            margin: 3rem 0;
+            gap: 6px;
+            transform: rotateX(20deg);
+            perspective: 500px;
         }
         
         .bar {
-            width: 8px;
-            background: linear-gradient(to top, #00bcd4, #3f51b5);
-            border-radius: 4px 4px 0 0;
+            width: 12px;
+            background: linear-gradient(to top, #ff00ff, #00ffff, #ffff00);
+            border-radius: 6px 6px 0 0;
             height: 20px;
-            animation: dance 1s infinite alternate;
-            animation-delay: calc(var(--i) * 0.1s);
+            animation: dance 0.8s infinite alternate;
+            animation-delay: calc(var(--i) * 0.05s);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+            transform-origin: bottom;
         }
         
         @keyframes dance {
-            0% { height: 20px; }
-            100% { height: 80px; }
+            0% { 
+                height: 20px;
+                transform: scaleY(1);
+            }
+            100% { 
+                height: 150px;
+                transform: scaleY(1.2);
+            }
         }
         
         .floating {
-            animation: float 6s ease-in-out infinite;
+            animation: float 8s ease-in-out infinite;
         }
         
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
         }
         
-        .shape {
+        .particles {
             position: absolute;
-            opacity: 0.3;
-            z-index: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            overflow: hidden;
         }
         
-        .circle {
-            width: 100px;
-            height: 100px;
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
             border-radius: 50%;
-            background: linear-gradient(45deg, #00bcd4, #3f51b5);
-            top: 20%;
-            left: 10%;
-            animation: rotate 20s linear infinite;
+            animation: particleFloat linear infinite;
         }
         
-        .square {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(45deg, #ff4081, #e040fb);
-            bottom: 30%;
-            right: 15%;
-            animation: rotate 15s linear infinite reverse;
+        @keyframes particleFloat {
+            0% { 
+                transform: translateY(0) translateX(0) rotate(0deg); 
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(-100vh) translateX(20vw) rotate(360deg); 
+                opacity: 0;
+            }
         }
         
-        .triangle {
-            width: 0;
-            height: 0;
-            border-left: 50px solid transparent;
-            border-right: 50px solid transparent;
-            border-bottom: 100px solid #ffeb3b;
+        .glitch-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgcGF0dGVyblRyYW5zZm9ybT0icm90YXRlKDApIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0icmdiYSgwLDAsMCwwLjEpIj48L3JlY3Q+PGxpbmUgeDE9IjAiIHkxPSIwIiB4Mj0iMTAwIiB5Mj0iMTAwIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIgc3Ryb2tlLXdpZHRoPSIxIj48L2xpbmU+PGxpbmUgeDE9IjEwMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMTAwIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIgc3Ryb2tlLXdpZHRoPSIxIj48L2xpbmU+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIj48L3JlY3Q+PC9zdmc+');
+            opacity: 0.1;
+            mix-blend-mode: overlay;
+            animation: glitch 0.5s infinite alternate;
+            z-index: 5;
+            pointer-events: none;
+        }
+        
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-5px, 5px); }
+            40% { transform: translate(-5px, -5px); }
+            60% { transform: translate(5px, 5px); }
+            80% { transform: translate(5px, -5px); }
+            100% { transform: translate(0); }
+        }
+        
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.9);
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                rgba(255, 255, 255, 0) 0%, 
+                rgba(255, 255, 255, 0.06) 50%, 
+                rgba(255, 255, 255, 0) 100%);
+            background-size: 100% 4px;
+            z-index: 15;
+            pointer-events: none;
+            animation: scanline 8s linear infinite;
+        }
+        
+        @keyframes scanline {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+        
+        .shockwave {
+            position: absolute;
             top: 50%;
-            right: 20%;
-            animation: rotate 25s linear infinite;
-            opacity: 0.2;
-        }
-        
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .music-control {
-            margin-top: 2rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        button {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s;
-            backdrop-filter: blur(5px);
-        }
-        
-        button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px);
-        }
-        
-        .volume-control {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        input[type="range"] {
-            -webkit-appearance: none;
-            width: 100px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-        }
-        
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 15px;
-            height: 15px;
+            left: 50%;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            background: white;
-            cursor: pointer;
+            background: rgba(255, 0, 255, 0.5);
+            transform: translate(-50%, -50%);
+            animation: shockwave 2s infinite;
+            z-index: 3;
+        }
+        
+        @keyframes shockwave {
+            0% { 
+                width: 20px; 
+                height: 20px; 
+                opacity: 0.8; 
+            }
+            100% { 
+                width: 500px; 
+                height: 500px; 
+                opacity: 0; 
+            }
         }
         
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
-            p { font-size: 1.2rem; }
+            p { font-size: 1.4rem; }
             .countdown { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
     <div class="overlay"></div>
-    
-    <div class="shape circle"></div>
-    <div class="shape square"></div>
-    <div class="shape triangle"></div>
+    <div class="particles" id="particles"></div>
+    <div class="glitch-effect"></div>
+    <div class="vignette"></div>
+    <div class="scanlines"></div>
+    <div class="shockwave"></div>
     
     <div class="container">
-        <h1 class="floating">Идут технические работы</h1>
+        <h1 class="floating">ИДУТ ТЕХНИЧЕСКИЕ РАБОТЫ</h1>
         
-        <p>Скоро что то будет :)</p>
+        <p>Мы создаём для вас нечто грандиозное! Скоро всё заработает!</p>
         
         <div class="progress-container">
             <div class="progress-bar"></div>
@@ -251,34 +311,28 @@
             <div class="bar" style="--i: 7"></div>
             <div class="bar" style="--i: 8"></div>
             <div class="bar" style="--i: 9"></div>
-        </div>
-        
-        <div class="music-control">
-            <button id="playBtn">▶</button>
-            <button id="pauseBtn">❚❚</button>
-            <div class="volume-control">
-                <span>🔊</span>
-                <input type="range" id="volume" min="0" max="1" step="0.1" value="0.7">
-            </div>
+            <div class="bar" style="--i: 10"></div>
+            <div class="bar" style="--i: 11"></div>
+            <div class="bar" style="--i: 12"></div>
+            <div class="bar" style="--i: 13"></div>
+            <div class="bar" style="--i: 14"></div>
         </div>
     </div>
 
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" autoplay loop>
         <source src="tex.mp3" type="audio/mpeg">
     </audio>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const audio = document.getElementById('bgMusic');
-            const playBtn = document.getElementById('playBtn');
-            const pauseBtn = document.getElementById('pauseBtn');
-            const volumeControl = document.getElementById('volume');
             const bars = document.querySelectorAll('.bar');
             const countdown = document.querySelector('.countdown');
+            const particlesContainer = document.getElementById('particles');
             
-            // Автовоспроизведение музыки с обработкой ошибок
+            // Автовоспроизведение музыки
             const playAudio = () => {
-                audio.volume = volumeControl.value;
+                audio.volume = 0.7;
                 const playPromise = audio.play();
                 
                 if (playPromise !== undefined) {
@@ -288,7 +342,6 @@
                         })
                         .catch(error => {
                             console.log("Автовоспроизведение заблокировано: ", error);
-                            playBtn.textContent = "▶ Включить звук";
                         });
                 }
             };
@@ -296,28 +349,66 @@
             // Попытка автовоспроизведения при загрузке
             playAudio();
             
-            // Управление музыкой
-            playBtn.addEventListener('click', () => {
-                audio.play();
-            });
+            // Создание частиц
+            function createParticles() {
+                for (let i = 0; i < 100; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    const size = Math.random() * 5 + 2;
+                    const posX = Math.random() * 100;
+                    const posY = Math.random() * 100 + 100;
+                    const duration = Math.random() * 10 + 5;
+                    const delay = Math.random() * 5;
+                    
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${posX}vw`;
+                    particle.style.top = `${posY}vh`;
+                    particle.style.animationDuration = `${duration}s`;
+                    particle.style.animationDelay = `-${delay}s`;
+                    
+                    // Случайный цвет частицы
+                    const colors = ['#ff00ff', '#00ffff', '#ffff00', '#ffffff'];
+                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    particlesContainer.appendChild(particle);
+                }
+            }
             
-            pauseBtn.addEventListener('click', () => {
-                audio.pause();
-            });
-            
-            volumeControl.addEventListener('input', () => {
-                audio.volume = volumeControl.value;
-            });
+            createParticles();
             
             // Анимация визуализатора музыки
             function animateBars() {
                 bars.forEach(bar => {
-                    const randomHeight = Math.floor(Math.random() * 60) + 20;
+                    const randomHeight = Math.floor(Math.random() * 130) + 20;
                     bar.style.height = `${randomHeight}px`;
+                    
+                    // Добавляем дополнительные эффекты в зависимости от высоты
+                    if (randomHeight > 100) {
+                        bar.style.boxShadow = `0 0 20px rgba(255, 0, 255, 0.9)`;
+                        bar.style.background = `linear-gradient(to top, #ff00ff, #ffff00)`;
+                    } else {
+                        bar.style.boxShadow = `0 0 10px rgba(0, 255, 255, 0.7)`;
+                        bar.style.background = `linear-gradient(to top, #ff00ff, #00ffff, #ffff00)`;
+                    }
                 });
             }
             
-            setInterval(animateBars, 150);
+            setInterval(animateBars, 100);
+            
+            // Создание шоквейв эффектов
+            function createShockwave() {
+                const shockwave = document.createElement('div');
+                shockwave.classList.add('shockwave');
+                document.body.appendChild(shockwave);
+                
+                setTimeout(() => {
+                    shockwave.remove();
+                }, 2000);
+            }
+            
+            setInterval(createShockwave, 3000);
             
             // Обратный отсчет (примерный)
             let time = 0;
@@ -328,8 +419,12 @@
                 const seconds = (time % 60).toString().padStart(2, '0');
                 countdown.textContent = `${hours}:${minutes}:${seconds}`;
             }, 1000);
+            
+            // Эффект мерцания
+            setInterval(() => {
+                document.body.style.backgroundPosition = `${Math.random() * 100}% ${Math.random() * 100}%`;
+            }, 5000);
         });
     </script>
 </body>
 </html>
-
